@@ -1,14 +1,13 @@
 import { NextResponse } from "next/server";
-import { dummyProducts } from "@/lib/dummy-data";
+import { getProductBySlug } from "@/db/repo";
 
 // GET /api/products/[slug] — public. Single product detail.
-// STUB: returns dummy data. TODO: query Supabase.
 export async function GET(
   _req: Request,
   { params }: { params: Promise<{ slug: string }> },
 ) {
   const { slug } = await params;
-  const product = dummyProducts.find((p) => p.slug === slug);
+  const product = await getProductBySlug(slug);
 
   if (!product) {
     return NextResponse.json({ error: "Product not found" }, { status: 404 });

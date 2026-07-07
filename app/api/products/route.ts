@@ -1,18 +1,24 @@
 import { NextResponse, type NextRequest } from "next/server";
-import { dummyProducts } from "@/lib/dummy-data";
+import { listActiveProducts } from "@/db/repo";
 import type { ProductCategory } from "@/types";
 
-// GET /api/products — public. List active products, filter by category.
-// STUB: returns dummy data. TODO: query Supabase.
-export async function GET(req: NextRequest) {
-  const category = req.nextUrl.searchParams.get("category") as
-    | ProductCategory
-    | null;
+const VALID_CATEGORIES: ProductCategory[] = [
+  "unisex",
+  "wanita",
+  "pria",
+  "diffuser",
+];
 
-  let products = dummyProducts.filter((p) => p.isActive);
-  if (category) {
-    products = products.filter((p) => p.category === category);
-  }
+function isProductCategory(value: string | null): value is ProductCategory {
+  return VALID_CATEGORIES.includes(value as ProductCategory);
+}
+
+// GET /api/products — public. List active products, filter by category.
+export async function GET(req: NextRequest) {
+  const categoryParam = req.nextUrl.searchParams.get("category");
+  const category = isProductCategory(categoryParam) ? categoryParam : undefined;
+
+  const products = await listActiveProducts(category);
 
   return NextResponse.json({ data: products });
 }
