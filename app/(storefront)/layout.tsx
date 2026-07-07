@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Button } from "@/components/ui/button";
 import { CartNavLink } from "@/components/storefront/cart-nav-link";
 
 /**
@@ -21,18 +22,12 @@ export default function StorefrontLayout({
             Koka Scent
           </Link>
           <nav className="flex items-center gap-1 rounded-full border border-border/70 bg-card/60 p-1 text-sm shadow-soft">
-            <Link
-              href="/"
-              className="rounded-full px-4 py-1.5 text-foreground/80 transition-colors hover:bg-secondary hover:text-foreground"
-            >
-              Beranda
-            </Link>
-            <Link
-              href="/products"
-              className="rounded-full px-4 py-1.5 text-foreground/80 transition-colors hover:bg-secondary hover:text-foreground"
-            >
-              Katalog
-            </Link>
+            <Button asChild variant="ghost" size="sm" className="rounded-full">
+              <Link href="/">Beranda</Link>
+            </Button>
+            <Button asChild variant="ghost" size="sm" className="rounded-full">
+              <Link href="/products">Katalog</Link>
+            </Button>
             <div className="rounded-full px-2">
               <CartNavLink />
             </div>
@@ -47,24 +42,15 @@ export default function StorefrontLayout({
       <footer className="mt-8 border-t border-border/60">
         <div className="mx-auto flex max-w-6xl flex-col gap-4 px-4 py-8 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex flex-wrap gap-2">
-            <Link
-              href="/products"
-              className="rounded-full border border-border bg-card px-4 py-2 text-sm text-foreground transition-colors hover:bg-secondary"
-            >
-              Katalog
-            </Link>
-            <Link
-              href="/products"
-              className="rounded-full border border-border bg-card px-4 py-2 text-sm text-foreground transition-colors hover:bg-secondary"
-            >
-              Koleksi
-            </Link>
-            <Link
-              href="/"
-              className="rounded-full border border-border bg-card px-4 py-2 text-sm text-foreground transition-colors hover:bg-secondary"
-            >
-              Tentang
-            </Link>
+            <Button asChild variant="outline" size="sm" className="rounded-full">
+              <Link href="/products">Katalog</Link>
+            </Button>
+            <Button asChild variant="outline" size="sm" className="rounded-full">
+              <Link href="/products">Koleksi</Link>
+            </Button>
+            <Button asChild variant="outline" size="sm" className="rounded-full">
+              <Link href="/">Tentang</Link>
+            </Button>
           </div>
           <p className="text-sm text-muted-foreground">
             © {new Date().getFullYear()} Koka Scent — Parfum terinspirasi Jepang.
