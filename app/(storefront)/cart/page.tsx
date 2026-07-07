@@ -5,6 +5,7 @@ import { ShoppingBagIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { CartLineItem } from "@/components/storefront/cart-line-item";
 import { CartSummary } from "@/components/storefront/cart-summary";
+import { SectionHeading } from "@/components/storefront/section-heading";
 import { useHydrated } from "@/hooks/use-hydrated";
 import { useCartStore } from "@/stores/cart-store";
 
@@ -19,22 +20,26 @@ export default function CartPage() {
 
   if (!mounted) {
     return (
-      <section className="space-y-4">
-        <h1 className="font-heading text-3xl">Keranjang</h1>
+      <section className="space-y-6">
+        <SectionHeading eyebrow="Keranjang" title="Keranjang Belanja" titleAs="h1" />
       </section>
     );
   }
 
   if (items.length === 0) {
     return (
-      <section className="flex flex-col items-center gap-4 py-16 text-center">
-        <ShoppingBagIcon className="size-12 text-muted-foreground" />
-        <h1 className="font-heading text-2xl">Keranjang kosong</h1>
+      <section className="flex flex-col items-center gap-4 py-24 text-center">
+        <div className="plinth flex size-20 items-center justify-center rounded-full">
+          <ShoppingBagIcon className="size-8 text-muted-foreground" />
+        </div>
+        <h1 className="font-heading text-2xl text-foreground">
+          Keranjang masih kosong
+        </h1>
         <p className="max-w-sm text-sm text-muted-foreground">
           Belum ada produk di keranjang Anda. Jelajahi katalog untuk menemukan
           aroma favorit Anda.
         </p>
-        <Button asChild>
+        <Button asChild size="lg" className="rounded-full">
           <Link href="/products">Lihat Katalog</Link>
         </Button>
       </section>
@@ -42,11 +47,11 @@ export default function CartPage() {
   }
 
   return (
-    <section className="space-y-6">
-      <h1 className="font-heading text-3xl">Keranjang</h1>
+    <section className="space-y-8">
+      <SectionHeading eyebrow="Keranjang" title="Keranjang Belanja" titleAs="h1" />
 
-      <div className="grid gap-6 lg:grid-cols-3">
-        <div className="rounded-lg border border-border bg-card px-4 lg:col-span-2">
+      <div className="grid gap-6 lg:grid-cols-3 lg:items-start">
+        <div className="rounded-2xl border border-border bg-card px-4 lg:col-span-2 sm:px-6">
           {items.map((item) => (
             <CartLineItem
               key={`${item.productId}-${item.variantId ?? "base"}`}
@@ -55,9 +60,14 @@ export default function CartPage() {
           ))}
         </div>
 
-        <div className="space-y-4">
+        <div className="space-y-4 lg:sticky lg:top-24">
           <CartSummary subtotal={subtotal}>
-            <Button asChild className="w-full" size="lg">
+            <Button
+              asChild
+              variant="secondary"
+              className="w-full rounded-full"
+              size="lg"
+            >
               <Link href="/checkout">Lanjut ke Checkout</Link>
             </Button>
           </CartSummary>

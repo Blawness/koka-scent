@@ -14,16 +14,16 @@ export function CartLineItem({ item }: { item: CartItem }) {
   const lineTotal = item.price * item.quantity;
 
   return (
-    <div className="flex gap-4 border-b border-border py-4 last:border-b-0">
+    <div className="flex gap-4 border-b border-border/70 py-5 last:border-b-0">
       <Link
         href={`/products/${item.slug}`}
-        className="relative h-20 w-20 shrink-0 overflow-hidden rounded-md bg-muted sm:h-24 sm:w-24"
+        className="plinth relative h-24 w-24 shrink-0 overflow-hidden rounded-xl sm:h-28 sm:w-28"
       >
         <Image
           src={item.image}
           alt={item.name}
           fill
-          sizes="96px"
+          sizes="112px"
           className="object-cover"
         />
       </Link>
@@ -33,7 +33,7 @@ export function CartLineItem({ item }: { item: CartItem }) {
           <div className="min-w-0">
             <Link
               href={`/products/${item.slug}`}
-              className="font-heading text-base leading-snug text-foreground hover:text-primary"
+              className="font-heading text-lg leading-snug text-foreground hover:text-primary"
             >
               {item.name}
             </Link>
@@ -47,7 +47,7 @@ export function CartLineItem({ item }: { item: CartItem }) {
             type="button"
             variant="ghost"
             size="icon"
-            className="text-muted-foreground hover:text-destructive"
+            className="shrink-0 rounded-full text-muted-foreground hover:text-destructive"
             aria-label="Hapus dari keranjang"
             onClick={() => removeItem(item.productId, item.variantId)}
           >
@@ -56,12 +56,12 @@ export function CartLineItem({ item }: { item: CartItem }) {
         </div>
 
         <div className="flex items-center justify-between">
-          <div className="flex items-center gap-1 rounded-md border border-border">
+          <div className="flex items-center gap-1 rounded-full border border-border p-0.5">
             <Button
               type="button"
-              variant="ghost"
+              variant="outline"
               size="icon"
-              className="h-8 w-8"
+              className="h-7 w-7 rounded-full border-transparent"
               aria-label="Kurangi jumlah"
               onClick={() =>
                 updateQuantity(
@@ -78,9 +78,9 @@ export function CartLineItem({ item }: { item: CartItem }) {
             </span>
             <Button
               type="button"
-              variant="ghost"
+              variant="outline"
               size="icon"
-              className="h-8 w-8"
+              className="h-7 w-7 rounded-full border-transparent"
               aria-label="Tambah jumlah"
               onClick={() =>
                 updateQuantity(
@@ -93,7 +93,7 @@ export function CartLineItem({ item }: { item: CartItem }) {
               <PlusIcon className="size-3.5" />
             </Button>
           </div>
-          <p className="text-sm font-medium text-foreground">
+          <p className="text-sm font-medium text-terracotta">
             {formatIDR(lineTotal)}
           </p>
         </div>

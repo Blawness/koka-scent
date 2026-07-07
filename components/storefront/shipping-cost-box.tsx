@@ -61,9 +61,9 @@ export function ShippingCostBox({
   }, [ready, city, postal, weightGrams]);
 
   return (
-    <div className="space-y-3 rounded-lg border border-border bg-card p-4">
-      <h2 className="flex items-center gap-2 font-heading text-lg text-foreground">
-        <TruckIcon className="size-4" />
+    <div className="space-y-4 rounded-2xl border border-border bg-card p-6">
+      <h2 className="flex items-center gap-2 font-heading text-xl text-foreground">
+        <TruckIcon className="size-4 text-terracotta" />
         Ongkos Kirim
       </h2>
 
@@ -94,9 +94,9 @@ export function ShippingCostBox({
                 key={`${rate.courier}-${rate.service}`}
                 type="button"
                 onClick={() => onSelect(rate)}
-                className={`flex w-full items-center justify-between rounded-md border px-3 py-2 text-left text-sm transition-colors ${
+                className={`flex w-full items-center justify-between rounded-2xl border px-4 py-3 text-left text-sm transition-colors ${
                   isSelected
-                    ? "border-primary bg-accent"
+                    ? "border-terracotta ring-2 ring-terracotta bg-accent"
                     : "border-border hover:bg-muted"
                 }`}
               >
@@ -110,7 +110,9 @@ export function ShippingCostBox({
                 </span>
                 <span className="flex items-center gap-2 tabular-nums text-foreground">
                   {formatIDR(rate.cost)}
-                  {isSelected && <CheckIcon className="size-4 text-primary" />}
+                  {isSelected && (
+                    <CheckIcon className="size-4 text-terracotta" />
+                  )}
                 </span>
               </button>
             );

@@ -13,6 +13,7 @@ import {
 } from "@/components/storefront/checkout-form";
 import { ShippingCostBox } from "@/components/storefront/shipping-cost-box";
 import { OrderSummary } from "@/components/storefront/order-summary";
+import { SectionHeading } from "@/components/storefront/section-heading";
 import { useHydrated } from "@/hooks/use-hydrated";
 import { useCartStore } from "@/stores/cart-store";
 import type { ShippingRate } from "@/lib/shipping";
@@ -96,20 +97,20 @@ export default function CheckoutPage() {
 
   if (!mounted || items.length === 0) {
     return (
-      <section className="space-y-4">
-        <h1 className="font-heading text-3xl">Checkout</h1>
+      <section className="space-y-6">
+        <SectionHeading eyebrow="Checkout" title="Checkout" titleAs="h1" />
       </section>
     );
   }
 
   return (
-    <section className="space-y-6">
-      <h1 className="font-heading text-3xl">Checkout</h1>
+    <section className="space-y-8">
+      <SectionHeading eyebrow="Checkout" title="Checkout" titleAs="h1" />
 
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="grid gap-6 lg:grid-cols-3"
+          className="grid gap-6 lg:grid-cols-3 lg:items-start"
         >
           <div className="space-y-6 lg:col-span-2">
             <CheckoutForm form={form} />
@@ -122,7 +123,7 @@ export default function CheckoutPage() {
             />
           </div>
 
-          <div>
+          <div className="lg:sticky lg:top-24">
             <OrderSummary
               items={items}
               subtotal={subtotal}

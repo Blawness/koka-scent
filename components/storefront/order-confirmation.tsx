@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { CheckCircle2Icon, MessageCircleIcon } from "lucide-react";
+import { CircleCheck, MessageCircleIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -50,7 +50,7 @@ export function OrderConfirmation({ orderNumber }: { orderNumber: string }) {
 
   if (status === "loading") {
     return (
-      <div className="space-y-4">
+      <div className="space-y-4 rounded-3xl border border-border bg-card p-6">
         <Skeleton className="h-8 w-2/3" />
         <Skeleton className="h-40 w-full" />
       </div>
@@ -59,7 +59,7 @@ export function OrderConfirmation({ orderNumber }: { orderNumber: string }) {
 
   if (status === "error" || !order) {
     return (
-      <div className="space-y-2 py-16 text-center">
+      <div className="space-y-2 rounded-3xl border border-border bg-card p-10 text-center">
         <p className="text-foreground">
           Pesanan tidak ditemukan untuk nomor{" "}
           <span className="font-medium">{orderNumber}</span>.
@@ -78,8 +78,8 @@ export function OrderConfirmation({ orderNumber }: { orderNumber: string }) {
 
   return (
     <div className="space-y-6">
-      <div className="flex flex-col items-center gap-2 text-center">
-        <CheckCircle2Icon className="size-12 text-primary" />
+      <div className="flex flex-col items-center gap-3 text-center">
+        <CircleCheck className="size-14 text-terracotta" strokeWidth={1.5} />
         <h1 className="font-heading text-2xl text-foreground">
           Pesanan Diterima
         </h1>
@@ -93,15 +93,17 @@ export function OrderConfirmation({ orderNumber }: { orderNumber: string }) {
         </p>
       </div>
 
-      <div className="rounded-lg border border-border bg-card p-4">
-        <p className="text-xs tracking-wide text-muted-foreground uppercase">
-          Nomor Pesanan
-        </p>
-        <p className="font-heading text-xl text-foreground">
-          {order.orderNumber}
-        </p>
+      <div className="rounded-3xl border border-border bg-card p-6 shadow-soft sm:p-8">
+        <div className="text-center">
+          <p className="text-xs tracking-[0.2em] text-muted-foreground uppercase">
+            Nomor Pesanan
+          </p>
+          <p className="display-number py-2 text-2xl break-all text-terracotta sm:text-4xl lg:text-5xl">
+            {order.orderNumber}
+          </p>
+        </div>
 
-        <Separator className="my-4" />
+        <Separator className="my-6" />
 
         <dl className="space-y-2 text-sm">
           <div className="flex justify-between">
@@ -129,7 +131,7 @@ export function OrderConfirmation({ orderNumber }: { orderNumber: string }) {
           </div>
         </dl>
 
-        <Separator className="my-4" />
+        <Separator className="my-6" />
 
         <dl className="space-y-1 text-sm text-muted-foreground">
           <div>
@@ -146,12 +148,12 @@ export function OrderConfirmation({ orderNumber }: { orderNumber: string }) {
         </dl>
       </div>
 
-      <div className="rounded-lg border border-dashed border-border bg-muted/40 p-4 text-center text-sm text-muted-foreground">
-        Ini adalah demo — belum ada pembayaran nyata yang diproses. Tim kami
-        akan menghubungi Anda untuk konfirmasi pembayaran dan pengiriman.
+      <div className="rounded-2xl border border-dashed border-border bg-muted/40 p-4 text-center text-sm text-muted-foreground">
+        Demo — belum ada pembayaran nyata yang diproses. Tim kami akan
+        menghubungi Anda untuk konfirmasi pembayaran dan pengiriman.
       </div>
 
-      <Button asChild size="lg" className="w-full">
+      <Button asChild size="lg" className="w-full rounded-full">
         <a
           href={`https://wa.me/${WHATSAPP_NUMBER}?text=${waMessage}`}
           target="_blank"

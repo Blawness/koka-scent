@@ -10,14 +10,14 @@ function ConfirmationContent() {
 
   if (!orderNumber) {
     return (
-      <section className="py-16 text-center">
+      <section className="py-24 text-center">
         <p className="text-foreground">Nomor pesanan tidak ditemukan.</p>
       </section>
     );
   }
 
   return (
-    <section className="mx-auto max-w-lg">
+    <section className="mx-auto max-w-lg py-6 sm:py-10">
       <OrderConfirmation orderNumber={orderNumber} />
     </section>
   );

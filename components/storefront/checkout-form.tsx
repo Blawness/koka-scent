@@ -38,10 +38,15 @@ export function CheckoutForm({
   form: UseFormReturn<CheckoutFormValues>;
 }) {
   return (
-    <div className="space-y-4 rounded-lg border border-border bg-card p-4">
-      <h2 className="font-heading text-lg text-foreground">
-        Data Penerima
-      </h2>
+    <div className="space-y-5 rounded-2xl border border-border bg-card p-6">
+      <div className="space-y-1">
+        <span className="text-xs font-medium tracking-[0.2em] text-muted-foreground uppercase">
+          Data Pengiriman
+        </span>
+        <h2 className="font-heading text-xl text-foreground">
+          Data Penerima
+        </h2>
+      </div>
 
       <FormField
         control={form.control}
@@ -50,7 +55,11 @@ export function CheckoutForm({
           <FormItem>
             <FormLabel>Nama Lengkap</FormLabel>
             <FormControl>
-              <Input placeholder="Nama penerima" {...field} />
+              <Input
+                className="rounded-xl"
+                placeholder="Nama penerima"
+                {...field}
+              />
             </FormControl>
             <FormMessage />
           </FormItem>
@@ -64,7 +73,12 @@ export function CheckoutForm({
           <FormItem>
             <FormLabel>Nomor Telepon</FormLabel>
             <FormControl>
-              <Input placeholder="08xxxxxxxxxx" inputMode="tel" {...field} />
+              <Input
+                className="rounded-xl"
+                placeholder="08xxxxxxxxxx"
+                inputMode="tel"
+                {...field}
+              />
             </FormControl>
             <FormMessage />
           </FormItem>
@@ -78,7 +92,11 @@ export function CheckoutForm({
           <FormItem>
             <FormLabel>Alamat</FormLabel>
             <FormControl>
-              <Input placeholder="Nama jalan, nomor rumah, RT/RW" {...field} />
+              <Input
+                className="rounded-xl"
+                placeholder="Nama jalan, nomor rumah, RT/RW"
+                {...field}
+              />
             </FormControl>
             <FormMessage />
           </FormItem>
@@ -93,7 +111,11 @@ export function CheckoutForm({
             <FormItem>
               <FormLabel>Kota</FormLabel>
               <FormControl>
-                <Input placeholder="Jakarta Selatan" {...field} />
+                <Input
+                  className="rounded-xl"
+                  placeholder="Jakarta Selatan"
+                  {...field}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -108,6 +130,7 @@ export function CheckoutForm({
               <FormLabel>Kode Pos</FormLabel>
               <FormControl>
                 <Input
+                  className="rounded-xl"
                   placeholder="12345"
                   inputMode="numeric"
                   {...field}

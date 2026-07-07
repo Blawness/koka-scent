@@ -23,8 +23,8 @@ export function OrderSummary({
   const total = subtotal + (shippingCost ?? 0);
 
   return (
-    <div className="space-y-4 rounded-lg border border-border bg-card p-4">
-      <h2 className="font-heading text-lg text-foreground">Pesanan Anda</h2>
+    <div className="space-y-5 rounded-3xl border border-border bg-card p-6 shadow-soft">
+      <h2 className="font-heading text-xl text-foreground">Pesanan Anda</h2>
 
       <ul className="space-y-3">
         {items.map((item) => (
@@ -32,7 +32,7 @@ export function OrderSummary({
             key={`${item.productId}-${item.variantId ?? "base"}`}
             className="flex items-center gap-3 text-sm"
           >
-            <div className="relative h-12 w-12 shrink-0 overflow-hidden rounded-md bg-muted">
+            <div className="plinth relative h-12 w-12 shrink-0 overflow-hidden rounded-xl">
               <Image
                 src={item.image}
                 alt={item.name}
@@ -74,18 +74,20 @@ export function OrderSummary({
 
       <Separator />
 
-      <div className="flex justify-between font-medium text-foreground">
+      <div className="flex justify-between font-heading text-lg text-foreground">
         <span>Total</span>
-        <span className="tabular-nums">{formatIDR(total)}</span>
+        <span className="tabular-nums text-terracotta">
+          {formatIDR(total)}
+        </span>
       </div>
 
       <Button
         type="submit"
         size="lg"
-        className="w-full"
+        className="w-full rounded-full"
         disabled={submitDisabled || submitting}
       >
-        {submitting ? "Memproses…" : "Buat Pesanan"}
+        {submitting ? "Memproses…" : "Bayar"}
       </Button>
 
       <p className="text-center text-xs text-muted-foreground">
