@@ -40,7 +40,12 @@ function ProductsPageContent() {
 
   return (
     <section className="space-y-6">
-      <SectionHeading eyebrow="Koleksi" title="Semua Produk" index="No 07" />
+      <SectionHeading
+        eyebrow="Koleksi"
+        title="Semua Produk"
+        index="No 07"
+        titleAs="h1"
+      />
 
       <div className="flex flex-col gap-3 rounded-2xl border border-border bg-card/60 p-3 sm:flex-row sm:items-center sm:justify-between">
         <SearchBar value={search} onChange={setSearch} />
