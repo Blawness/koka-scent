@@ -25,6 +25,11 @@ export default function CheckoutPage() {
   const mounted = useHydrated();
   const [selectedRate, setSelectedRate] = useState<ShippingRate | null>(null);
   const [submitting, setSubmitting] = useState(false);
+  // Once an order is placed we navigate to the confirmation page and clear the
+  // cart. Without this flag, clearing the cart re-renders with items.length===0
+  // and the empty-cart guard below would race the push and bounce the user to
+  // /cart instead of the confirmation.
+  const [placed, setPlaced] = useState(false);
 
   const items = useCartStore((state) => state.items);
   const subtotal = useCartStore((state) => state.subtotal());
@@ -37,10 +42,10 @@ export default function CheckoutPage() {
   });
 
   useEffect(() => {
-    if (mounted && items.length === 0) {
+    if (mounted && !placed && items.length === 0) {
       router.replace("/cart");
     }
-  }, [mounted, items.length, router]);
+  }, [mounted, placed, items.length, router]);
 
   const city = form.watch("city");
   const postal = form.watch("postal");
@@ -80,8 +85,9 @@ export default function CheckoutPage() {
         throw new Error(body?.error ?? "Gagal membuat pesanan");
       }
 
-      clear();
+      setPlaced(true);
       router.push(`/checkout/confirmation?order=${body.data.orderNumber}`);
+      clear();
     } catch {
       toast.error("Gagal membuat pesanan. Silakan coba lagi.");
       setSubmitting(false);
