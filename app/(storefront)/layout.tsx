@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { CartNavLink } from "@/components/storefront/cart-nav-link";
 
 /**
  * Storefront shell (public). Placeholder header/footer — final design pending
@@ -23,9 +24,7 @@ export default function StorefrontLayout({
             <Link href="/products" className="hover:text-primary">
               Katalog
             </Link>
-            <Link href="/cart" className="hover:text-primary">
-              Keranjang
-            </Link>
+            <CartNavLink />
           </nav>
         </div>
       </header>
