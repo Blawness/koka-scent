@@ -8,13 +8,16 @@ export function SectionHeading({
   index,
   eyebrow,
   title,
+  titleAs = "h2",
   className,
 }: {
   index?: string;
   eyebrow?: string;
   title: string;
+  titleAs?: "h1" | "h2";
   className?: string;
 }) {
+  const TitleTag = titleAs as React.ElementType;
   return (
     <div className={cn("flex items-end gap-4", className)}>
       {index && (
@@ -28,9 +31,9 @@ export function SectionHeading({
             {eyebrow}
           </span>
         )}
-        <h2 className="font-heading text-2xl leading-tight text-foreground sm:text-3xl">
+        <TitleTag className="font-heading text-2xl leading-tight text-foreground sm:text-3xl">
           {title}
-        </h2>
+        </TitleTag>
       </div>
     </div>
   );

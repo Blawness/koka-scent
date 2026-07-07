@@ -79,7 +79,7 @@ export function ProductDetail({ slug }: { slug: string }) {
           >
             No
           </span>
-          <SectionHeading eyebrow={CATEGORY_LABELS[product.category]} title={product.name} />
+          <SectionHeading eyebrow={CATEGORY_LABELS[product.category]} title={product.name} titleAs="h1" />
         </div>
 
         <div className="flex items-center gap-2">
