@@ -91,7 +91,7 @@
   --chart-3: oklch(0.72 0.04 100);
   --chart-4: oklch(0.6 0.02 66);
   --chart-5: oklch(0.4 0.015 62);
-  --radius: 0.5rem;
+  --radius: 0.85rem;
   --sidebar: oklch(0.95 0.014 84);
   --sidebar-foreground: oklch(0.27 0.008 62);
   --sidebar-primary: oklch(0.53 0.045 148);
@@ -152,4 +152,27 @@
   html {
     @apply font-sans;
   }
+}
+
+/* Editorial Warm — v2 utilities */
+@utility shadow-soft {
+  box-shadow: 0 24px 48px -24px oklch(0.27 0.008 62 / 0.28),
+    0 8px 24px -16px oklch(0.27 0.008 62 / 0.18);
+}
+
+/* Editorial image "plinth": rounded frame on a soft warm gradient backdrop */
+@utility plinth {
+  background-image: radial-gradient(
+    120% 100% at 50% 0%,
+    var(--secondary) 0%,
+    var(--muted) 100%
+  );
+}
+
+/* Oversized serif display numeral used as a graphic element */
+@utility display-number {
+  font-family: var(--font-heading);
+  font-weight: 500;
+  line-height: 0.8;
+  letter-spacing: -0.02em;
 }
