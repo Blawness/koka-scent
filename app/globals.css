@@ -1,0 +1,155 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-sans);
+  --font-serif: var(--font-serif);
+  --font-mono: var(--font-geist-mono);
+  --font-heading: var(--font-serif);
+  --color-sage: var(--sage);
+  --color-sage-foreground: var(--sage-foreground);
+  --color-terracotta: var(--terracotta);
+  --color-terracotta-foreground: var(--terracotta-foreground);
+  --color-cream: var(--cream);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
+}
+
+/*
+ * Koka Scent brand palette (PRD Section 11) — DEFAULT TOKENS.
+ * Warm cream/off-white base, charcoal (not pure black) text,
+ * muted sage green + terracotta accents, soft beige surfaces.
+ * Final values to be tuned once the client picks a visual reference.
+ */
+:root {
+  /* Brand raw tokens */
+  --cream: oklch(0.968 0.014 85);
+  --sage: oklch(0.53 0.045 148);
+  --sage-foreground: oklch(0.98 0.01 85);
+  --terracotta: oklch(0.63 0.11 42);
+  --terracotta-foreground: oklch(0.98 0.01 85);
+
+  --background: oklch(0.968 0.014 85); /* warm cream */
+  --foreground: oklch(0.27 0.008 62); /* charcoal */
+  --card: oklch(0.985 0.01 85); /* off-white */
+  --card-foreground: oklch(0.27 0.008 62);
+  --popover: oklch(0.985 0.01 85);
+  --popover-foreground: oklch(0.27 0.008 62);
+  --primary: oklch(0.53 0.045 148); /* muted sage */
+  --primary-foreground: oklch(0.98 0.01 85);
+  --secondary: oklch(0.93 0.016 82); /* soft beige */
+  --secondary-foreground: oklch(0.3 0.008 62);
+  --muted: oklch(0.94 0.014 82);
+  --muted-foreground: oklch(0.5 0.014 66);
+  --accent: oklch(0.9 0.032 52); /* light terracotta wash */
+  --accent-foreground: oklch(0.3 0.02 42);
+  --destructive: oklch(0.577 0.185 30);
+  --border: oklch(0.89 0.013 80);
+  --input: oklch(0.89 0.013 80);
+  --ring: oklch(0.53 0.045 148);
+  --chart-1: oklch(0.53 0.045 148); /* sage */
+  --chart-2: oklch(0.63 0.11 42); /* terracotta */
+  --chart-3: oklch(0.72 0.04 100);
+  --chart-4: oklch(0.6 0.02 66);
+  --chart-5: oklch(0.4 0.015 62);
+  --radius: 0.5rem;
+  --sidebar: oklch(0.95 0.014 84);
+  --sidebar-foreground: oklch(0.27 0.008 62);
+  --sidebar-primary: oklch(0.53 0.045 148);
+  --sidebar-primary-foreground: oklch(0.98 0.01 85);
+  --sidebar-accent: oklch(0.9 0.032 52);
+  --sidebar-accent-foreground: oklch(0.3 0.02 42);
+  --sidebar-border: oklch(0.89 0.013 80);
+  --sidebar-ring: oklch(0.53 0.045 148);
+}
+
+.dark {
+  --cream: oklch(0.985 0.01 85);
+  --sage: oklch(0.62 0.05 148);
+  --sage-foreground: oklch(0.2 0.01 62);
+  --terracotta: oklch(0.68 0.11 42);
+  --terracotta-foreground: oklch(0.2 0.01 62);
+
+  --background: oklch(0.22 0.008 62); /* warm charcoal */
+  --foreground: oklch(0.95 0.01 85);
+  --card: oklch(0.26 0.008 62);
+  --card-foreground: oklch(0.95 0.01 85);
+  --popover: oklch(0.26 0.008 62);
+  --popover-foreground: oklch(0.95 0.01 85);
+  --primary: oklch(0.62 0.05 148); /* sage */
+  --primary-foreground: oklch(0.2 0.01 62);
+  --secondary: oklch(0.32 0.01 64);
+  --secondary-foreground: oklch(0.95 0.01 85);
+  --muted: oklch(0.32 0.01 64);
+  --muted-foreground: oklch(0.72 0.012 70);
+  --accent: oklch(0.4 0.05 45); /* terracotta-tinted */
+  --accent-foreground: oklch(0.95 0.01 85);
+  --destructive: oklch(0.704 0.17 28);
+  --border: oklch(1 0 0 / 12%);
+  --input: oklch(1 0 0 / 16%);
+  --ring: oklch(0.62 0.05 148);
+  --chart-1: oklch(0.62 0.05 148);
+  --chart-2: oklch(0.68 0.11 42);
+  --chart-3: oklch(0.72 0.04 100);
+  --chart-4: oklch(0.6 0.02 66);
+  --chart-5: oklch(0.8 0.015 80);
+  --sidebar: oklch(0.26 0.008 62);
+  --sidebar-foreground: oklch(0.95 0.01 85);
+  --sidebar-primary: oklch(0.62 0.05 148);
+  --sidebar-primary-foreground: oklch(0.2 0.01 62);
+  --sidebar-accent: oklch(0.4 0.05 45);
+  --sidebar-accent-foreground: oklch(0.95 0.01 85);
+  --sidebar-border: oklch(1 0 0 / 12%);
+  --sidebar-ring: oklch(0.62 0.05 148);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+  html {
+    @apply font-sans;
+  }
+}
