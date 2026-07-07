@@ -1,9 +1,11 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { Suspense, useMemo, useState } from "react";
+import { useSearchParams } from "next/navigation";
 import { useProducts } from "@/hooks/use-products";
 import {
   CategoryFilter,
+  OPTIONS,
   type CategoryOption,
 } from "@/components/storefront/category-filter";
 import { SearchBar } from "@/components/storefront/search-bar";
@@ -11,12 +13,18 @@ import {
   ProductGrid,
   ProductGridSkeleton,
 } from "@/components/storefront/product-grid";
+import { SectionHeading } from "@/components/storefront/section-heading";
 
 // Product listing — Feature 1. Fetches active products once, then filters by
 // category and searches by name entirely client-side.
-export default function ProductsPage() {
+function ProductsPageContent() {
   const { data: products, isLoading, isError } = useProducts();
-  const [category, setCategory] = useState<CategoryOption>("all");
+  const categoryParam = useSearchParams().get("category");
+  const [category, setCategory] = useState<CategoryOption>(() =>
+    OPTIONS.includes(categoryParam as CategoryOption)
+      ? (categoryParam as CategoryOption)
+      : "all",
+  );
   const [search, setSearch] = useState("");
 
   const filtered = useMemo(() => {
@@ -32,14 +40,9 @@ export default function ProductsPage() {
 
   return (
     <section className="space-y-6">
-      <div className="space-y-1">
-        <h1 className="font-heading text-3xl text-foreground">Katalog</h1>
-        <p className="text-muted-foreground">
-          Parfum terinspirasi Jepang — temukan aroma yang cocok untukmu.
-        </p>
-      </div>
+      <SectionHeading eyebrow="Koleksi" title="Semua Produk" index="No 07" />
 
-      <div className="space-y-4">
+      <div className="flex flex-col gap-3 rounded-2xl border border-border bg-card/60 p-3 sm:flex-row sm:items-center sm:justify-between">
         <SearchBar value={search} onChange={setSearch} />
         <CategoryFilter value={category} onChange={setCategory} />
       </div>
@@ -54,5 +57,13 @@ export default function ProductsPage() {
 
       {!isLoading && !isError && <ProductGrid products={filtered} />}
     </section>
+  );
+}
+
+export default function ProductsPage() {
+  return (
+    <Suspense fallback={<ProductGridSkeleton />}>
+      <ProductsPageContent />
+    </Suspense>
   );
 }

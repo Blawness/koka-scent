@@ -7,7 +7,7 @@ import { CATEGORY_LABELS } from "@/components/storefront/product-card";
 
 export type CategoryOption = ProductCategory | "all";
 
-const OPTIONS: CategoryOption[] = ["all", "unisex", "wanita", "pria", "diffuser"];
+export const OPTIONS: CategoryOption[] = ["all", "unisex", "wanita", "pria", "diffuser"];
 
 export function CategoryFilter({
   value,

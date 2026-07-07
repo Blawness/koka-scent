@@ -20,7 +20,7 @@ export function SearchBar({
         value={value}
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
-        className="pl-9"
+        className="rounded-full pl-9"
         aria-label="Cari produk"
       />
     </div>

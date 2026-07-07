@@ -32,32 +32,32 @@ export function ProductCard({ product }: { product: ProductWithVariants }) {
 
   return (
     <Link href={`/products/${product.slug}`} className="group block">
-      <Card className="h-full overflow-hidden py-0 transition-shadow group-hover:shadow-md">
-        <div className="relative aspect-square w-full overflow-hidden bg-muted">
+      <Card className="h-full overflow-hidden rounded-2xl border-border/70 py-0 transition-all duration-300 group-hover:-translate-y-1 group-hover:shadow-soft">
+        <div className="plinth relative aspect-square w-full overflow-hidden">
           <Image
             src={product.images[0] ?? "/products/placeholder.svg"}
             alt={product.name}
             fill
             sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
-            className="object-cover transition-transform duration-300 group-hover:scale-105"
+            className="object-cover transition-transform duration-500 group-hover:scale-105"
           />
           {outOfStock && (
             <Badge
               variant="secondary"
-              className="absolute top-2 right-2 bg-background/90"
+              className="absolute top-3 right-3 rounded-full bg-background/90"
             >
               Stok Habis
             </Badge>
           )}
         </div>
-        <CardContent className="space-y-1 px-4 pb-4">
-          <span className="text-xs tracking-wide text-muted-foreground uppercase">
+        <CardContent className="space-y-1 px-4 py-4">
+          <span className="text-xs tracking-[0.15em] text-muted-foreground uppercase">
             {CATEGORY_LABELS[product.category]}
           </span>
           <h3 className="font-heading text-base leading-snug text-foreground">
             {product.name}
           </h3>
-          <p className="text-sm font-medium text-foreground">
+          <p className="text-sm font-medium text-terracotta">
             {priceRange(product)}
           </p>
         </CardContent>
