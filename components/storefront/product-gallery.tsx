@@ -15,8 +15,8 @@ export function ProductGallery({
   const [active, setActive] = useState(0);
 
   return (
-    <div className="space-y-3">
-      <div className="relative aspect-square w-full overflow-hidden rounded-2xl bg-muted">
+    <div className="flex flex-col gap-3 lg:flex-row">
+      <div className="plinth shadow-soft relative aspect-square w-full overflow-hidden rounded-3xl">
         <Image
           src={gallery[active]}
           alt={name}
@@ -27,17 +27,17 @@ export function ProductGallery({
         />
       </div>
       {gallery.length > 1 && (
-        <div className="flex gap-2">
+        <div className="flex gap-2 overflow-x-auto lg:w-20 lg:flex-none lg:flex-col lg:overflow-x-visible lg:overflow-y-auto">
           {gallery.map((src, i) => (
             <button
               key={src + i}
               type="button"
               onClick={() => setActive(i)}
               className={cn(
-                "relative size-16 shrink-0 overflow-hidden rounded-lg border bg-muted transition-opacity",
+                "relative size-16 shrink-0 overflow-hidden rounded-xl bg-muted transition-opacity lg:size-20 lg:w-full",
                 i === active
-                  ? "border-primary"
-                  : "border-border opacity-70 hover:opacity-100",
+                  ? "ring-2 ring-terracotta"
+                  : "opacity-70 hover:opacity-100",
               )}
               aria-label={`Lihat gambar ${i + 1}`}
             >

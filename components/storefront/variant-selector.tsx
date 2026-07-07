@@ -30,7 +30,10 @@ export function VariantSelector({
               size="sm"
               disabled={outOfStock}
               onClick={() => onSelect(variant)}
-              className={cn("rounded-full", outOfStock && "line-through")}
+              className={cn(
+                "rounded-full",
+                outOfStock && "text-muted-foreground line-through",
+              )}
             >
               {variant.label}
               {outOfStock ? " (habis)" : ""}

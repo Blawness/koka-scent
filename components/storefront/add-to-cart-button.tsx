@@ -37,7 +37,7 @@ export function AddToCartButton({
     <Button
       type="button"
       size="lg"
-      className="w-full sm:w-auto"
+      className="w-full rounded-full bg-terracotta text-terracotta-foreground hover:bg-terracotta/90"
       disabled={disabled}
       onClick={handleAdd}
     >

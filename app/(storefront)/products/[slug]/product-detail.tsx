@@ -8,6 +8,7 @@ import { Separator } from "@/components/ui/separator";
 import { useProduct } from "@/hooks/use-products";
 import { CATEGORY_LABELS } from "@/components/storefront/product-card";
 import { ProductGallery } from "@/components/storefront/product-gallery";
+import { SectionHeading } from "@/components/storefront/section-heading";
 import { VariantSelector } from "@/components/storefront/variant-selector";
 import { NotesCard } from "@/components/storefront/notes-card";
 import { AddToCartButton } from "@/components/storefront/add-to-cart-button";
@@ -32,9 +33,9 @@ export function ProductDetail({ slug }: { slug: string }) {
 
   if (isLoading) {
     return (
-      <section className="grid gap-8 lg:grid-cols-2">
-        <Skeleton className="aspect-square w-full rounded-2xl" />
-        <div className="space-y-4">
+      <section className="grid gap-10 lg:grid-cols-12">
+        <Skeleton className="aspect-square w-full rounded-3xl lg:col-span-7" />
+        <div className="space-y-4 lg:col-span-5">
           <Skeleton className="h-4 w-1/4" />
           <Skeleton className="h-8 w-3/4" />
           <Skeleton className="h-6 w-1/3" />
@@ -65,23 +66,27 @@ export function ProductDetail({ slug }: { slug: string }) {
     (selectedVariant ? selectedVariant.stock : product.stock) <= 0;
 
   return (
-    <section className="grid gap-8 lg:grid-cols-2">
-      <ProductGallery images={product.images} name={product.name} />
+    <section className="grid gap-10 lg:grid-cols-12 lg:gap-8">
+      <div className="lg:col-span-7">
+        <ProductGallery images={product.images} name={product.name} />
+      </div>
 
-      <div className="space-y-6">
-        <div className="space-y-2">
-          <span className="text-xs tracking-wide text-muted-foreground uppercase">
-            {CATEGORY_LABELS[product.category]}
+      <div className="space-y-6 lg:col-span-5">
+        <div className="relative space-y-2">
+          <span
+            aria-hidden
+            className="display-number absolute -top-6 right-0 text-7xl text-muted-foreground/15 sm:-top-8 sm:text-8xl"
+          >
+            No
           </span>
-          <h1 className="font-heading text-3xl text-foreground">
-            {product.name}
-          </h1>
-          <div className="flex items-center gap-2">
-            <p className="text-xl font-medium text-foreground">
-              {formatIDR(displayPrice)}
-            </p>
-            {outOfStock && <Badge variant="secondary">Stok Habis</Badge>}
-          </div>
+          <SectionHeading eyebrow={CATEGORY_LABELS[product.category]} title={product.name} />
+        </div>
+
+        <div className="flex items-center gap-2">
+          <p className="font-heading text-2xl text-terracotta">
+            {formatIDR(displayPrice)}
+          </p>
+          {outOfStock && <Badge variant="secondary">Stok Habis</Badge>}
         </div>
 
         <Separator />

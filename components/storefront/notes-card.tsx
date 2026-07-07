@@ -22,15 +22,15 @@ export function NotesCard({
   };
 
   return (
-    <Card className="bg-secondary/40">
+    <Card className="rounded-2xl border-border/70 bg-secondary/40">
       <CardContent className="space-y-4">
-        <h2 className="font-heading text-lg text-foreground">
-          Profil Aroma
-        </h2>
+        <span className="text-xs font-medium tracking-[0.2em] text-muted-foreground uppercase">
+          Aroma
+        </span>
         <div className="space-y-3">
           {LAYERS.map((layer, i) => (
             <div key={layer.key} className="flex items-start gap-3">
-              <span className="mt-0.5 flex size-6 shrink-0 items-center justify-center rounded-full bg-primary/15 text-xs font-medium text-primary">
+              <span className="display-number mt-0.5 flex size-8 shrink-0 items-center justify-center rounded-full bg-background/70 text-sm text-terracotta">
                 {i + 1}
               </span>
               <div>
