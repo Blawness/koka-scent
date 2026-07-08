@@ -39,7 +39,14 @@ export default function CheckoutPage() {
 
   const form = useForm<CheckoutFormValues>({
     resolver: zodResolver(checkoutFormSchema),
-    defaultValues: { name: "", phone: "", address: "", city: "", postal: "" },
+    defaultValues: {
+      name: "",
+      email: "",
+      phone: "",
+      address: "",
+      city: "",
+      postal: "",
+    },
   });
 
   useEffect(() => {
@@ -64,6 +71,7 @@ export default function CheckoutPage() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           name: values.name,
+          email: values.email,
           phone: values.phone,
           address: values.address,
           city: values.city,

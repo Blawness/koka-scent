@@ -8,6 +8,13 @@
       "when": 1783420711225,
       "tag": "0000_handy_shadow_king",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1783492196436,
+      "tag": "0001_puzzling_sir_ram",
+      "breakpoints": true
     }
   ]
 }

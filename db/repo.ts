@@ -61,7 +61,9 @@ function mapOrderRow(row: OrderRow): OrderWithItems {
     id: row.id,
     orderNumber: row.orderNumber,
     customerName: row.customerName,
+    customerEmail: row.customerEmail,
     customerPhone: row.customerPhone,
+    userId: row.userId,
     shippingAddress: row.shippingAddress,
     shippingCity: row.shippingCity,
     shippingPostalCode: row.shippingPostalCode,
@@ -149,6 +151,7 @@ export type CreateOrderItemInput = {
 
 export type CreateOrderInput = {
   customerName: string;
+  customerEmail: string;
   customerPhone: string;
   shippingAddress: string;
   shippingCity: string;
@@ -183,6 +186,7 @@ export async function createOrder(
       .values({
         orderNumber,
         customerName: input.customerName,
+        customerEmail: input.customerEmail,
         customerPhone: input.customerPhone,
         shippingAddress: input.shippingAddress,
         shippingCity: input.shippingCity,
@@ -220,7 +224,9 @@ export async function createOrder(
     id: orderId,
     orderNumber,
     customerName: input.customerName,
+    customerEmail: input.customerEmail,
     customerPhone: input.customerPhone,
+    userId: null,
     shippingAddress: input.shippingAddress,
     shippingCity: input.shippingCity,
     shippingPostalCode: input.shippingPostalCode,

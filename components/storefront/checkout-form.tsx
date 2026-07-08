@@ -5,6 +5,7 @@ import type { UseFormReturn } from "react-hook-form";
 import { Input } from "@/components/ui/input";
 import {
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -14,6 +15,7 @@ import {
 // Checkout contact + shipping-address fields — react-hook-form + zod.
 export const checkoutFormSchema = z.object({
   name: z.string().trim().min(1, "Nama wajib diisi"),
+  email: z.email("Email tidak valid"),
   phone: z
     .string()
     .trim()
@@ -61,6 +63,30 @@ export function CheckoutForm({
                 {...field}
               />
             </FormControl>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+
+      <FormField
+        control={form.control}
+        name="email"
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>Email</FormLabel>
+            <FormControl>
+              <Input
+                className="rounded-xl"
+                placeholder="nama@email.com"
+                type="email"
+                inputMode="email"
+                autoComplete="email"
+                {...field}
+              />
+            </FormControl>
+            <FormDescription>
+              Konfirmasi pesanan dan resi pengiriman dikirim ke email ini.
+            </FormDescription>
             <FormMessage />
           </FormItem>
         )}

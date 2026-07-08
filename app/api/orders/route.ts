@@ -13,6 +13,7 @@ const orderItemSchema = z.object({
 
 const createOrderSchema = z.object({
   name: z.string().min(1),
+  email: z.email(),
   phone: z.string().min(1),
   address: z.string().min(1),
   city: z.string().min(1),
@@ -34,11 +35,12 @@ export async function POST(req: Request) {
     );
   }
 
-  const { name, phone, address, city, postal, items, shippingCost, subtotal, total } =
+  const { name, email, phone, address, city, postal, items, shippingCost, subtotal, total } =
     parsed.data;
 
   const result = await createOrder({
     customerName: name,
+    customerEmail: email,
     customerPhone: phone,
     shippingAddress: address,
     shippingCity: city,

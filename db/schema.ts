@@ -64,7 +64,12 @@ export const orders = pgTable("orders", {
   id: uuid("id").primaryKey().defaultRandom(),
   orderNumber: text("order_number").notNull().unique(),
   customerName: text("customer_name").notNull(),
+  customerEmail: text("customer_email").notNull(),
   customerPhone: text("customer_phone").notNull(),
+  // Neon Auth user, once customer accounts land. Null for guest checkout.
+  // text, not uuid: Better Auth ids are opaque strings. No FK — neon_auth
+  // tables are not in this schema (see admin-dashboard-design.md).
+  userId: text("user_id"),
   shippingAddress: text("shipping_address").notNull(),
   shippingCity: text("shipping_city").notNull(),
   shippingPostalCode: text("shipping_postal_code").notNull(),

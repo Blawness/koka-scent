@@ -45,7 +45,9 @@ export type Order = {
   id: string;
   orderNumber: string; // human-readable, e.g. KS-20260707-0001
   customerName: string;
+  customerEmail: string;
   customerPhone: string;
+  userId: string | null; // Neon Auth user; null for guest checkout
   shippingAddress: string;
   shippingCity: string;
   shippingPostalCode: string;
