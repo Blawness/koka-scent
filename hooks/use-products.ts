@@ -20,13 +20,3 @@ export function useProducts() {
     queryFn: () => fetchJson<ProductWithVariants[]>("/api/products"),
   });
 }
-
-/** Single product by slug, for the PDP. */
-export function useProduct(slug: string) {
-  return useQuery({
-    queryKey: ["products", slug],
-    queryFn: () => fetchJson<ProductWithVariants>(`/api/products/${slug}`),
-    enabled: Boolean(slug),
-    retry: false,
-  });
-}
