@@ -12,10 +12,8 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { formatDateTimeID, formatIDR } from "@/lib/format";
-import {
-  getMockOrderById,
-  getMockProductById,
-} from "@/lib/mock/admin-data";
+import { requireAdmin } from "@/lib/dal";
+import { getOrderById, listAllProducts } from "@/db/repo";
 
 export const metadata: Metadata = { title: "Detail Pesanan" };
 
@@ -24,9 +22,14 @@ export default async function OrderDetailPage({
 }: {
   params: Promise<{ id: string }>;
 }) {
+  await requireAdmin();
   const { id } = await params;
-  const order = getMockOrderById(id);
+  const order = await getOrderById(id);
   if (!order) notFound();
+
+  const products = await listAllProducts();
+  const productName = (productId: string) =>
+    products.find((p) => p.id === productId)?.name ?? productId;
 
   return (
     <section className="max-w-4xl space-y-6">
@@ -45,7 +48,7 @@ export default async function OrderDetailPage({
 
       <Card>
         <CardContent className="py-2">
-          <OrderStatusSelect initialStatus={order.status} />
+          <OrderStatusSelect orderId={order.id} initialStatus={order.status} />
         </CardContent>
       </Card>
 
@@ -83,11 +86,10 @@ export default async function OrderDetailPage({
             </TableHeader>
             <TableBody>
               {order.items.map((it) => {
-                const product = getMockProductById(it.productId);
                 return (
                   <TableRow key={it.id}>
                     <TableCell className="font-medium text-foreground">
-                      {product?.name ?? it.productId}
+                      {productName(it.productId)}
                     </TableCell>
                     <TableCell className="text-right">
                       {formatIDR(it.priceAtPurchase)}

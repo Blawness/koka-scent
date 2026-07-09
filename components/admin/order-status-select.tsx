@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useTransition } from "react";
 import { toast } from "sonner";
+import { updateOrderStatusAction } from "@/app/(admin)/admin/orders/actions";
 import { Button } from "@/components/ui/button";
 import {
   Select,
@@ -19,12 +20,15 @@ import type { OrderStatus } from "@/types";
  * `nextStatuses()`. Mock phase: applying only updates local state and toasts.
  */
 export function OrderStatusSelect({
+  orderId,
   initialStatus,
 }: {
+  orderId: string;
   initialStatus: OrderStatus;
 }) {
   const [status, setStatus] = useState<OrderStatus>(initialStatus);
   const [pending, setPending] = useState<OrderStatus | "">("");
+  const [saving, startTransition] = useTransition();
 
   const options = nextStatuses(status);
 
@@ -57,15 +61,23 @@ export function OrderStatusSelect({
             </SelectContent>
           </Select>
           <Button
-            disabled={!pending}
+            disabled={!pending || saving}
             onClick={() => {
               if (!pending) return;
-              setStatus(pending);
-              toast.success(`Status diubah ke "${STATUS_LABEL[pending]}"`);
-              setPending("");
+              const target = pending;
+              startTransition(async () => {
+                const res = await updateOrderStatusAction(orderId, target);
+                if (res.error) {
+                  toast.error(res.error);
+                  return;
+                }
+                setStatus(target);
+                setPending("");
+                toast.success(`Status diubah ke "${STATUS_LABEL[target]}"`);
+              });
             }}
           >
-            Perbarui
+            {saving ? "Menyimpan…" : "Perbarui"}
           </Button>
         </div>
       )}

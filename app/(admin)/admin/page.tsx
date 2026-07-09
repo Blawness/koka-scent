@@ -12,13 +12,15 @@ import {
 } from "@/components/ui/table";
 import { formatIDR } from "@/lib/format";
 import { CATEGORY_LABEL } from "@/lib/order-status";
-import { getMockDashboardSummary } from "@/lib/mock/admin-data";
+import { requireAdmin } from "@/lib/dal";
+import { getDashboardSummary } from "@/db/repo";
 
 export const metadata: Metadata = { title: "Dashboard" };
 
-export default function AdminDashboardPage() {
+export default async function AdminDashboardPage() {
+  await requireAdmin();
   const { ordersToday, ordersThisWeek, revenueThisWeek, lowStock } =
-    getMockDashboardSummary();
+    await getDashboardSummary();
 
   return (
     <section className="space-y-8">

@@ -3,11 +3,14 @@ import Link from "next/link";
 import { Plus } from "lucide-react";
 import { ProductTable } from "@/components/admin/product-table";
 import { Button } from "@/components/ui/button";
-import { mockProducts } from "@/lib/mock/admin-data";
+import { requireAdmin } from "@/lib/dal";
+import { listAllProducts } from "@/db/repo";
 
 export const metadata: Metadata = { title: "Produk" };
 
-export default function AdminProductsPage() {
+export default async function AdminProductsPage() {
+  await requireAdmin();
+  const products = await listAllProducts();
   return (
     <section className="space-y-6">
       <div className="flex items-center justify-between">
@@ -19,7 +22,7 @@ export default function AdminProductsPage() {
         </Button>
       </div>
       <div className="rounded-lg border border-border">
-        <ProductTable products={mockProducts} />
+        <ProductTable products={products} />
       </div>
     </section>
   );

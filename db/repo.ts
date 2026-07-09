@@ -7,8 +7,14 @@
 // a module-level in-memory array — good enough for the zero-setup demo path,
 // reset on every server restart.
 
-import { and, eq, sql } from "drizzle-orm";
+import { and, desc, eq, gte, inArray, lt, sql } from "drizzle-orm";
 import { randomUUID } from "node:crypto";
+import { canTransition } from "@/lib/order-status";
+import {
+  jakartaDayStart,
+  jakartaOrderPrefix,
+  jakartaWeekStart,
+} from "@/lib/date-window";
 import { db } from "./client";
 import {
   adminUsers,
@@ -96,13 +102,6 @@ function mapOrderRow(row: OrderRow): OrderWithItems {
 // ---------------------------------------------------------------------------
 
 const memoryOrders: OrderWithItems[] = [];
-
-function orderNumberPrefix(date: Date): string {
-  const ymd = `${date.getFullYear()}${String(date.getMonth() + 1).padStart(2, "0")}${String(
-    date.getDate(),
-  ).padStart(2, "0")}`;
-  return `KS-${ymd}-`;
-}
 
 function nextOrderNumber(prefix: string, countToday: number): string {
   return `${prefix}${String(countToday + 1).padStart(4, "0")}`;
@@ -230,7 +229,7 @@ export async function createOrder(
   input: CreateOrderInput,
 ): Promise<CreateOrderResult> {
   const now = new Date();
-  const prefix = orderNumberPrefix(now);
+  const prefix = jakartaOrderPrefix(now);
 
   if (db) {
     const [{ count }] = await db
@@ -328,4 +327,241 @@ export async function getOrderByNumber(
   if (!order) return null;
   if (phone && order.customerPhone !== phone) return null;
   return order;
+}
+
+// ---------------------------------------------------------------------------
+// Admin: products (require a database — no seed-data fallback)
+// ---------------------------------------------------------------------------
+
+export type ProductVariantInput = {
+  label: string;
+  priceOverride: number | null;
+  stock: number;
+};
+
+export type ProductInput = {
+  name: string;
+  slug: string;
+  category: ProductCategory;
+  price: number;
+  stock: number;
+  notesTop: string;
+  notesMiddle: string;
+  notesBase: string;
+  isActive: boolean;
+  images: string[];
+  variants: ProductVariantInput[];
+};
+
+export async function listAllProducts(): Promise<ProductWithVariants[]> {
+  const database = requireDb();
+  const rows = await database.query.products.findMany({
+    with: { variants: true },
+    orderBy: [desc(products.createdAt)],
+  });
+  return rows.map(mapProductRow);
+}
+
+export async function getProductById(
+  id: string,
+): Promise<ProductWithVariants | null> {
+  const database = requireDb();
+  const row = await database.query.products.findFirst({
+    where: eq(products.id, id),
+    with: { variants: true },
+  });
+  return row ? mapProductRow(row) : null;
+}
+
+async function replaceVariants(
+  database: NonNullable<typeof db>,
+  productId: string,
+  variants: ProductVariantInput[],
+): Promise<void> {
+  await database
+    .delete(productVariants)
+    .where(eq(productVariants.productId, productId));
+  if (variants.length > 0) {
+    await database.insert(productVariants).values(
+      variants.map((v) => ({
+        productId,
+        label: v.label,
+        priceOverride: v.priceOverride,
+        stock: v.stock,
+      })),
+    );
+  }
+}
+
+export async function createProduct(input: ProductInput): Promise<string> {
+  const database = requireDb();
+  const [row] = await database
+    .insert(products)
+    .values({
+      slug: input.slug,
+      name: input.name,
+      category: input.category,
+      price: input.price,
+      images: input.images,
+      notesTop: input.notesTop,
+      notesMiddle: input.notesMiddle,
+      notesBase: input.notesBase,
+      stock: input.stock,
+      isActive: input.isActive,
+    })
+    .returning({ id: products.id });
+  await replaceVariants(database, row.id, input.variants);
+  return row.id;
+}
+
+export async function updateProduct(
+  id: string,
+  input: ProductInput,
+): Promise<void> {
+  const database = requireDb();
+  await database
+    .update(products)
+    .set({
+      slug: input.slug,
+      name: input.name,
+      category: input.category,
+      price: input.price,
+      images: input.images,
+      notesTop: input.notesTop,
+      notesMiddle: input.notesMiddle,
+      notesBase: input.notesBase,
+      stock: input.stock,
+      isActive: input.isActive,
+      updatedAt: new Date(),
+    })
+    .where(eq(products.id, id));
+  await replaceVariants(database, id, input.variants);
+}
+
+export async function setProductActive(
+  id: string,
+  isActive: boolean,
+): Promise<void> {
+  const database = requireDb();
+  await database
+    .update(products)
+    .set({ isActive, updatedAt: new Date() })
+    .where(eq(products.id, id));
+}
+
+// ---------------------------------------------------------------------------
+// Admin: orders
+// ---------------------------------------------------------------------------
+
+export async function listOrders(opts: {
+  status?: OrderStatus;
+  limit: number;
+  offset: number;
+}): Promise<{ orders: OrderWithItems[]; total: number }> {
+  const database = requireDb();
+  const where = opts.status ? eq(orders.status, opts.status) : undefined;
+
+  const rows = await database.query.orders.findMany({
+    where,
+    with: { items: true },
+    orderBy: [desc(orders.createdAt)],
+    limit: opts.limit,
+    offset: opts.offset,
+  });
+
+  const [{ count }] = await database
+    .select({ count: sql<number>`count(*)::int` })
+    .from(orders)
+    .where(where ?? sql`true`);
+
+  return { orders: rows.map(mapOrderRow), total: count };
+}
+
+export async function getOrderById(
+  id: string,
+): Promise<OrderWithItems | null> {
+  const database = requireDb();
+  const row = await database.query.orders.findFirst({
+    where: eq(orders.id, id),
+    with: { items: true },
+  });
+  return row ? mapOrderRow(row) : null;
+}
+
+export async function updateOrderStatus(
+  id: string,
+  status: OrderStatus,
+): Promise<void> {
+  const database = requireDb();
+  const current = await database.query.orders.findFirst({
+    where: eq(orders.id, id),
+    columns: { status: true },
+  });
+  if (!current) throw new Error("Pesanan tidak ditemukan.");
+  if (!canTransition(current.status, status)) {
+    throw new Error(
+      `Transisi status tidak valid: ${current.status} → ${status}.`,
+    );
+  }
+  await database
+    .update(orders)
+    .set({ status, updatedAt: new Date() })
+    .where(eq(orders.id, id));
+}
+
+// ---------------------------------------------------------------------------
+// Admin: dashboard summary (Asia/Jakarta windows)
+// ---------------------------------------------------------------------------
+
+const REVENUE_STATUSES: OrderStatus[] = [
+  "paid",
+  "processing",
+  "shipped",
+  "completed",
+];
+
+export type DashboardSummary = {
+  ordersToday: number;
+  ordersThisWeek: number;
+  revenueThisWeek: number;
+  lowStock: ProductWithVariants[];
+};
+
+export async function getDashboardSummary(): Promise<DashboardSummary> {
+  const database = requireDb();
+  const dayStart = jakartaDayStart();
+  const weekStart = jakartaWeekStart();
+
+  const [{ count: ordersToday }] = await database
+    .select({ count: sql<number>`count(*)::int` })
+    .from(orders)
+    .where(gte(orders.createdAt, dayStart));
+
+  const [{ count: ordersThisWeek }] = await database
+    .select({ count: sql<number>`count(*)::int` })
+    .from(orders)
+    .where(gte(orders.createdAt, weekStart));
+
+  const [{ revenue }] = await database
+    .select({ revenue: sql<number>`coalesce(sum(${orders.total}), 0)::int` })
+    .from(orders)
+    .where(
+      and(
+        gte(orders.createdAt, weekStart),
+        inArray(orders.status, REVENUE_STATUSES),
+      ),
+    );
+
+  const lowRows = await database.query.products.findMany({
+    where: and(eq(products.isActive, true), lt(products.stock, 5)),
+    with: { variants: true },
+    orderBy: [products.stock],
+  });
+
+  return {
+    ordersToday,
+    ordersThisWeek,
+    revenueThisWeek: revenue,
+    lowStock: lowRows.map(mapProductRow),
+  };
 }

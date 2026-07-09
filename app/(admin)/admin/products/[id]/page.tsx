@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ProductForm } from "@/components/admin/product-form";
-import { getMockProductById } from "@/lib/mock/admin-data";
+import { requireAdmin } from "@/lib/dal";
+import { getProductById } from "@/db/repo";
 
 export const metadata: Metadata = { title: "Edit Produk" };
 
@@ -11,8 +12,9 @@ export default async function EditProductPage({
 }: {
   params: Promise<{ id: string }>;
 }) {
+  await requireAdmin();
   const { id } = await params;
-  const product = getMockProductById(id);
+  const product = await getProductById(id);
   if (!product) notFound();
 
   return (

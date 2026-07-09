@@ -1,9 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useTransition } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { toast } from "sonner";
+import { setProductActiveAction } from "@/app/(admin)/admin/products/actions";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -30,14 +31,22 @@ export function ProductTable({
   const [active, setActive] = useState<Record<string, boolean>>(() =>
     Object.fromEntries(products.map((p) => [p.id, p.isActive])),
   );
+  const [pending, startTransition] = useTransition();
 
   function toggle(p: ProductWithVariants) {
-    setActive((prev) => {
-      const next = !prev[p.id];
-      toast.success(
-        next ? `"${p.name}" diaktifkan` : `"${p.name}" dinonaktifkan`,
-      );
-      return { ...prev, [p.id]: next };
+    const next = !active[p.id];
+    // Optimistic — revert if the server rejects.
+    setActive((prev) => ({ ...prev, [p.id]: next }));
+    startTransition(async () => {
+      const res = await setProductActiveAction(p.id, next);
+      if (res.error) {
+        setActive((prev) => ({ ...prev, [p.id]: !next }));
+        toast.error(res.error);
+      } else {
+        toast.success(
+          next ? `"${p.name}" diaktifkan` : `"${p.name}" dinonaktifkan`,
+        );
+      }
     });
   }
 
@@ -97,6 +106,7 @@ export function ProductTable({
                   <Button
                     size="sm"
                     variant={isActive ? "ghost" : "secondary"}
+                    disabled={pending}
                     onClick={() => toggle(p)}
                   >
                     {isActive ? "Nonaktifkan" : "Aktifkan"}

@@ -1,10 +1,14 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { toast } from "sonner";
 import { ArrowDown, ArrowUp, Plus, Trash2 } from "lucide-react";
+import {
+  createProductAction,
+  updateProductAction,
+} from "@/app/(admin)/admin/products/actions";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -47,6 +51,7 @@ export function ProductForm({
 }) {
   const router = useRouter();
   const isEdit = Boolean(product);
+  const [pending, startTransition] = useTransition();
 
   const [name, setName] = useState(product?.name ?? "");
   const [slug, setSlug] = useState(product?.slug ?? "");
@@ -108,10 +113,42 @@ export function ProductForm({
       toast.error("Harga harus lebih dari 0");
       return;
     }
-    toast.success(
-      isEdit ? `Produk "${name}" disimpan` : `Produk "${name}" dibuat`,
-    );
-    router.push("/admin/products");
+
+    const payload = {
+      name: name.trim(),
+      slug: slug.trim(),
+      category,
+      price: Number(price),
+      stock: Number(stock || 0),
+      notesTop: notesTop.trim(),
+      notesMiddle: notesMiddle.trim(),
+      notesBase: notesBase.trim(),
+      isActive,
+      images,
+      variants: variants
+        .filter((v) => v.label.trim())
+        .map((v) => ({
+          label: v.label.trim(),
+          priceOverride:
+            v.priceOverride.trim() === "" ? null : Number(v.priceOverride),
+          stock: Number(v.stock || 0),
+        })),
+    };
+
+    startTransition(async () => {
+      const res =
+        isEdit && product
+          ? await updateProductAction(product.id, payload)
+          : await createProductAction(payload);
+      if (res.error) {
+        toast.error(res.error);
+        return;
+      }
+      toast.success(
+        isEdit ? `Produk "${name}" disimpan` : `Produk "${name}" dibuat`,
+      );
+      router.push("/admin/products");
+    });
   }
 
   return (
@@ -394,7 +431,13 @@ export function ProductForm({
 
       {/* Actions */}
       <div className="flex gap-2 border-t border-border pt-6">
-        <Button type="submit">{isEdit ? "Simpan Perubahan" : "Buat Produk"}</Button>
+        <Button type="submit" disabled={pending}>
+          {pending
+            ? "Menyimpan…"
+            : isEdit
+              ? "Simpan Perubahan"
+              : "Buat Produk"}
+        </Button>
         <Button
           type="button"
           variant="ghost"
