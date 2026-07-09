@@ -91,6 +91,9 @@ export const orders = pgTable("orders", {
   subtotal: integer("subtotal").notNull(),
   total: integer("total").notNull(),
   status: orderStatusEnum("status").notNull().default("pending"),
+  // Opaque per-order secret for the confirmation link — closes the IDOR on the
+  // sequential order number. Nullable: orders predating this column have none.
+  accessToken: text("access_token"),
   midtransOrderId: text("midtrans_order_id"),
   createdAt: timestamp("created_at", { withTimezone: true })
     .notNull()

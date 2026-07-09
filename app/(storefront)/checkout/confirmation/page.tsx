@@ -7,6 +7,7 @@ import { OrderConfirmation } from "@/components/storefront/order-confirmation";
 function ConfirmationContent() {
   const searchParams = useSearchParams();
   const orderNumber = searchParams.get("order");
+  const token = searchParams.get("token");
 
   if (!orderNumber) {
     return (
@@ -18,7 +19,7 @@ function ConfirmationContent() {
 
   return (
     <section className="mx-auto max-w-lg py-6 sm:py-10">
-      <OrderConfirmation orderNumber={orderNumber} />
+      <OrderConfirmation orderNumber={orderNumber} token={token} />
     </section>
   );
 }

@@ -21,7 +21,13 @@ const STATUS_LABELS: Record<OrderWithItems["status"], string> = {
   expired: "Kedaluwarsa",
 };
 
-export function OrderConfirmation({ orderNumber }: { orderNumber: string }) {
+export function OrderConfirmation({
+  orderNumber,
+  token,
+}: {
+  orderNumber: string;
+  token?: string | null;
+}) {
   const [order, setOrder] = useState<OrderWithItems | null>(null);
   const [status, setStatus] = useState<"loading" | "ready" | "error">(
     "loading",
@@ -30,7 +36,8 @@ export function OrderConfirmation({ orderNumber }: { orderNumber: string }) {
   useEffect(() => {
     let cancelled = false;
 
-    fetch(`/api/orders/${orderNumber}`)
+    const qs = token ? `?token=${encodeURIComponent(token)}` : "";
+    fetch(`/api/orders/${orderNumber}${qs}`)
       .then(async (res) => {
         if (!res.ok) throw new Error("not found");
         const body = (await res.json()) as { data: OrderWithItems };
@@ -46,7 +53,7 @@ export function OrderConfirmation({ orderNumber }: { orderNumber: string }) {
     return () => {
       cancelled = true;
     };
-  }, [orderNumber]);
+  }, [orderNumber, token]);
 
   if (status === "loading") {
     return (

@@ -80,11 +80,8 @@ export default function CheckoutPage() {
             productId: item.productId,
             variantId: item.variantId,
             quantity: item.quantity,
-            priceAtPurchase: item.price,
           })),
           shippingCost: selectedRate.cost,
-          subtotal,
-          total: subtotal + selectedRate.cost,
         }),
       });
 
@@ -95,7 +92,9 @@ export default function CheckoutPage() {
       }
 
       setPlaced(true);
-      router.push(`/checkout/confirmation?order=${body.data.orderNumber}`);
+      const params = new URLSearchParams({ order: body.data.orderNumber });
+      if (body.data.token) params.set("token", body.data.token);
+      router.push(`/checkout/confirmation?${params.toString()}`);
       clear();
     } catch {
       toast.error("Gagal membuat pesanan. Silakan coba lagi.");

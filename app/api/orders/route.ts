@@ -4,11 +4,13 @@ import { createOrder } from "@/db/repo";
 
 // POST /api/orders — public. Create order (status `pending`). No payment
 // call — demo checkout only persists the order.
+//
+// The client sends product/variant/quantity only. Prices, subtotal, and total
+// are computed server-side from trusted product data (never from the request).
 const orderItemSchema = z.object({
   productId: z.string().min(1),
   variantId: z.string().min(1).nullable(),
   quantity: z.number().int().positive(),
-  priceAtPurchase: z.number().int().nonnegative(),
 });
 
 const createOrderSchema = z.object({
@@ -20,8 +22,6 @@ const createOrderSchema = z.object({
   postal: z.string().min(1),
   items: z.array(orderItemSchema).min(1),
   shippingCost: z.number().int().nonnegative(),
-  subtotal: z.number().int().nonnegative(),
-  total: z.number().int().nonnegative(),
 });
 
 export async function POST(req: Request) {
@@ -35,24 +35,37 @@ export async function POST(req: Request) {
     );
   }
 
-  const { name, email, phone, address, city, postal, items, shippingCost, subtotal, total } =
+  const { name, email, phone, address, city, postal, items, shippingCost } =
     parsed.data;
 
-  const result = await createOrder({
-    customerName: name,
-    customerEmail: email,
-    customerPhone: phone,
-    shippingAddress: address,
-    shippingCity: city,
-    shippingPostalCode: postal,
-    shippingCost,
-    subtotal,
-    total,
-    items,
-  });
+  let result;
+  try {
+    result = await createOrder({
+      customerName: name,
+      customerEmail: email,
+      customerPhone: phone,
+      shippingAddress: address,
+      shippingCity: city,
+      shippingPostalCode: postal,
+      shippingCost,
+      items,
+    });
+  } catch (e) {
+    // Invalid/inactive product or variant — reject rather than persisting.
+    return NextResponse.json(
+      { error: e instanceof Error ? e.message : "Gagal membuat pesanan" },
+      { status: 400 },
+    );
+  }
 
   return NextResponse.json(
-    { data: { orderNumber: result.orderNumber, status: result.status } },
+    {
+      data: {
+        orderNumber: result.orderNumber,
+        status: result.status,
+        token: result.accessToken,
+      },
+    },
     { status: 201 },
   );
 }

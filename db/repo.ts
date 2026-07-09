@@ -8,8 +8,9 @@
 // reset on every server restart.
 
 import { and, desc, eq, gte, inArray, lt, sql } from "drizzle-orm";
-import { randomUUID } from "node:crypto";
+import { randomBytes, randomUUID } from "node:crypto";
 import { canTransition } from "@/lib/order-status";
+import { priceLineItems, type LineItemInput } from "@/lib/order-pricing";
 import {
   jakartaDayStart,
   jakartaOrderPrefix,
@@ -200,12 +201,8 @@ export async function getProductBySlug(
 // Orders
 // ---------------------------------------------------------------------------
 
-export type CreateOrderItemInput = {
-  productId: string;
-  variantId: string | null;
-  quantity: number;
-  priceAtPurchase: number;
-};
+// Client chooses product/variant/quantity only — never the price.
+export type CreateOrderItemInput = LineItemInput;
 
 export type CreateOrderInput = {
   customerName: string;
@@ -215,21 +212,66 @@ export type CreateOrderInput = {
   shippingCity: string;
   shippingPostalCode: string;
   shippingCost: number;
-  subtotal: number;
-  total: number;
   items: CreateOrderItemInput[];
 };
 
 export type CreateOrderResult = {
   orderNumber: string;
   status: OrderStatus;
+  accessToken: string;
 };
+
+/** Load the products referenced by the line items, with variants. */
+async function loadProductsForItems(
+  items: CreateOrderItemInput[],
+): Promise<ProductWithVariants[]> {
+  const ids = [...new Set(items.map((i) => i.productId))];
+  if (ids.length === 0) return [];
+  if (db) {
+    const rows = await db.query.products.findMany({
+      where: inArray(products.id, ids),
+      with: { variants: true },
+    });
+    return rows.map(mapProductRow);
+  }
+  return seedProducts.filter((p) => ids.includes(p.id));
+}
+
+const PG_UNIQUE_VIOLATION = "23505";
+
+function isUniqueViolation(err: unknown): boolean {
+  const code = (err as { code?: string })?.code;
+  return code === PG_UNIQUE_VIOLATION || /duplicate key/i.test(String(err));
+}
 
 export async function createOrder(
   input: CreateOrderInput,
 ): Promise<CreateOrderResult> {
   const now = new Date();
   const prefix = jakartaOrderPrefix(now);
+  const accessToken = randomBytes(24).toString("hex");
+
+  // Prices are resolved server-side from trusted product data.
+  const referenced = await loadProductsForItems(input.items);
+  const { items: pricedItems, subtotal } = priceLineItems(
+    input.items,
+    referenced,
+  );
+  const total = subtotal + input.shippingCost;
+
+  const orderValues = {
+    customerName: input.customerName,
+    customerEmail: input.customerEmail,
+    customerPhone: input.customerPhone,
+    shippingAddress: input.shippingAddress,
+    shippingCity: input.shippingCity,
+    shippingPostalCode: input.shippingPostalCode,
+    shippingCost: input.shippingCost,
+    subtotal,
+    total,
+    status: "pending" as const,
+    accessToken,
+  };
 
   if (db) {
     const [{ count }] = await db
@@ -237,38 +279,39 @@ export async function createOrder(
       .from(orders)
       .where(sql`${orders.orderNumber} like ${prefix + "%"}`);
 
-    const orderNumber = nextOrderNumber(prefix, count);
+    // Order-number generation (count → compute → insert) is not atomic under
+    // concurrency, so retry on the unique-constraint collision.
+    for (let attempt = 0; attempt < 5; attempt++) {
+      const orderNumber = nextOrderNumber(prefix, count + attempt);
+      try {
+        const [orderRow] = await db
+          .insert(orders)
+          .values({ ...orderValues, orderNumber })
+          .returning();
 
-    const [orderRow] = await db
-      .insert(orders)
-      .values({
-        orderNumber,
-        customerName: input.customerName,
-        customerEmail: input.customerEmail,
-        customerPhone: input.customerPhone,
-        shippingAddress: input.shippingAddress,
-        shippingCity: input.shippingCity,
-        shippingPostalCode: input.shippingPostalCode,
-        shippingCost: input.shippingCost,
-        subtotal: input.subtotal,
-        total: input.total,
-        status: "pending",
-      })
-      .returning();
+        if (pricedItems.length > 0) {
+          await db.insert(orderItems).values(
+            pricedItems.map((item) => ({
+              orderId: orderRow.id,
+              productId: item.productId,
+              variantId: item.variantId,
+              quantity: item.quantity,
+              priceAtPurchase: item.priceAtPurchase,
+            })),
+          );
+        }
 
-    if (input.items.length > 0) {
-      await db.insert(orderItems).values(
-        input.items.map((item) => ({
-          orderId: orderRow.id,
-          productId: item.productId,
-          variantId: item.variantId,
-          quantity: item.quantity,
-          priceAtPurchase: item.priceAtPurchase,
-        })),
-      );
+        return {
+          orderNumber: orderRow.orderNumber,
+          status: orderRow.status,
+          accessToken,
+        };
+      } catch (err) {
+        if (isUniqueViolation(err)) continue;
+        throw err;
+      }
     }
-
-    return { orderNumber: orderRow.orderNumber, status: orderRow.status };
+    throw new Error("Gagal membuat nomor pesanan unik. Silakan coba lagi.");
   }
 
   const countToday = memoryOrders.filter((o) =>
@@ -289,13 +332,13 @@ export async function createOrder(
     shippingCity: input.shippingCity,
     shippingPostalCode: input.shippingPostalCode,
     shippingCost: input.shippingCost,
-    subtotal: input.subtotal,
-    total: input.total,
+    subtotal,
+    total,
     status: "pending",
     midtransOrderId: null,
     createdAt: nowIso,
     updatedAt: nowIso,
-    items: input.items.map((item) => ({
+    items: pricedItems.map((item) => ({
       id: randomUUID(),
       orderId,
       productId: item.productId,
@@ -306,27 +349,44 @@ export async function createOrder(
   };
 
   memoryOrders.push(newOrder);
-  return { orderNumber, status: "pending" };
+  memoryTokens.set(orderNumber, accessToken);
+  return { orderNumber, status: "pending", accessToken };
 }
 
+/** Access tokens for the no-DB path (kept out of the domain type). */
+const memoryTokens = new Map<string, string>();
+
+/**
+ * Look up an order by number, gated by a credential. Returns the order only
+ * when `token` matches the order's access token OR `phone` matches the customer
+ * phone. Without a matching credential, returns null — closing the IDOR on the
+ * enumerable order number.
+ */
 export async function getOrderByNumber(
   orderNumber: string,
-  phone?: string,
+  opts: { phone?: string; token?: string } = {},
 ): Promise<OrderWithItems | null> {
+  const { phone, token } = opts;
+  if (!phone && !token) return null;
+
   if (db) {
     const row = await db.query.orders.findFirst({
       where: eq(orders.orderNumber, orderNumber),
       with: { items: true },
     });
     if (!row) return null;
-    if (phone && row.customerPhone !== phone) return null;
-    return mapOrderRow(row);
+    const ok =
+      (token != null && row.accessToken === token) ||
+      (phone != null && row.customerPhone === phone);
+    return ok ? mapOrderRow(row) : null;
   }
 
   const order = memoryOrders.find((o) => o.orderNumber === orderNumber);
   if (!order) return null;
-  if (phone && order.customerPhone !== phone) return null;
-  return order;
+  const ok =
+    (token != null && memoryTokens.get(orderNumber) === token) ||
+    (phone != null && order.customerPhone === phone);
+  return ok ? order : null;
 }
 
 // ---------------------------------------------------------------------------
