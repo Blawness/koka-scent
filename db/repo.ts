@@ -10,7 +10,13 @@
 import { and, eq, sql } from "drizzle-orm";
 import { randomUUID } from "node:crypto";
 import { db } from "./client";
-import { orderItems, orders, productVariants, products } from "./schema";
+import {
+  adminUsers,
+  orderItems,
+  orders,
+  productVariants,
+  products,
+} from "./schema";
 import { seedProducts } from "./seed-data";
 import type {
   OrderStatus,
@@ -100,6 +106,59 @@ function orderNumberPrefix(date: Date): string {
 
 function nextOrderNumber(prefix: string, countToday: number): string {
   return `${prefix}${String(countToday + 1).padStart(4, "0")}`;
+}
+
+/** Admin functions require a real database — no seed-data fallback. */
+function requireDb(): NonNullable<typeof db> {
+  if (!db) {
+    throw new Error(
+      "DATABASE_URL is not set. Admin operations require a database.",
+    );
+  }
+  return db;
+}
+
+// ---------------------------------------------------------------------------
+// Admin accounts (NextAuth Credentials)
+// ---------------------------------------------------------------------------
+
+export type AdminUser = {
+  id: string;
+  email: string;
+  name: string;
+  role: string;
+  passwordHash: string;
+};
+
+export async function getAdminByEmail(
+  email: string,
+): Promise<AdminUser | null> {
+  const database = requireDb();
+  const row = await database.query.adminUsers.findFirst({
+    where: eq(adminUsers.email, email),
+  });
+  return row ?? null;
+}
+
+export async function createAdminUser(input: {
+  email: string;
+  name: string;
+  passwordHash: string;
+  role?: string;
+}): Promise<void> {
+  const database = requireDb();
+  await database
+    .insert(adminUsers)
+    .values({
+      email: input.email,
+      name: input.name,
+      passwordHash: input.passwordHash,
+      role: input.role ?? "admin",
+    })
+    .onConflictDoUpdate({
+      target: adminUsers.email,
+      set: { passwordHash: input.passwordHash, name: input.name },
+    });
 }
 
 // ---------------------------------------------------------------------------

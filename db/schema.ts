@@ -30,6 +30,20 @@ export const orderStatusEnum = pgEnum("order_status", [
   "expired",
 ]);
 
+// Admin accounts for NextAuth (Auth.js v5) Credentials login. Not managed by a
+// third-party auth vendor — passwords are scrypt-hashed in lib/auth/password.ts.
+// The first admin is created by db/seed-admin.ts.
+export const adminUsers = pgTable("admin_users", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  email: text("email").notNull().unique(),
+  passwordHash: text("password_hash").notNull(),
+  name: text("name").notNull(),
+  role: text("role").notNull().default("admin"),
+  createdAt: timestamp("created_at", { withTimezone: true })
+    .notNull()
+    .defaultNow(),
+});
+
 export const products = pgTable("products", {
   id: uuid("id").primaryKey().defaultRandom(),
   slug: text("slug").notNull().unique(),

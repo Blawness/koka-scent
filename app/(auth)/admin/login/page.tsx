@@ -1,20 +1,16 @@
 "use client";
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useActionState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { loginAction, type LoginState } from "./actions";
 
-/**
- * Admin login — mock phase. No real authentication: submitting simply routes to
- * the dashboard. Real Neon Auth lands in the functional phase.
- */
+const initialState: LoginState = {};
+
 export default function AdminLoginPage() {
-  const router = useRouter();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [state, formAction, pending] = useActionState(loginAction, initialState);
 
   return (
     <Card className="w-full max-w-sm py-8">
@@ -25,20 +21,14 @@ export default function AdminLoginPage() {
             Masuk untuk mengelola toko
           </p>
         </div>
-        <form
-          className="space-y-4"
-          onSubmit={(e) => {
-            e.preventDefault();
-            router.push("/admin");
-          }}
-        >
+        <form action={formAction} className="space-y-4">
           <div className="space-y-1.5">
             <Label htmlFor="email">Email</Label>
             <Input
               id="email"
+              name="email"
               type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              required
               placeholder="admin@kokascent.id"
               autoComplete="email"
             />
@@ -47,20 +37,22 @@ export default function AdminLoginPage() {
             <Label htmlFor="password">Kata Sandi</Label>
             <Input
               id="password"
+              name="password"
               type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              required
               placeholder="••••••••"
               autoComplete="current-password"
             />
           </div>
-          <Button type="submit" className="w-full">
-            Masuk
+          {state.error && (
+            <p className="text-sm text-destructive" role="alert">
+              {state.error}
+            </p>
+          )}
+          <Button type="submit" className="w-full" disabled={pending}>
+            {pending ? "Memproses…" : "Masuk"}
           </Button>
         </form>
-        <p className="text-center text-xs text-muted-foreground">
-          Demo — kredensial apa pun akan diterima.
-        </p>
       </CardContent>
     </Card>
   );
