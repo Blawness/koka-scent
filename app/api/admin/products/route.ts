@@ -1,31 +1,29 @@
 import { NextResponse } from "next/server";
-import { seedProducts } from "@/db/seed-data";
+import { verifySession } from "@/lib/dal";
+import { productInputSchema } from "@/lib/validation/product";
+import { createProduct, listAllProducts } from "@/db/repo";
 
-// TODO: replace with real Supabase Auth admin check (Feature 4).
-// Every /api/admin/* handler must be gated behind this.
-async function requireAdmin(): Promise<boolean> {
-  return true; // STUB: allow all during scaffolding.
-}
-
-// GET /api/admin/products — admin. List all products (incl. inactive).
-// STUB: reads in-repo seed data directly (admin data layer is out of scope
-// for this task; not backed by db/repo.ts yet).
+// GET /api/admin/products — list all products (incl. inactive).
 export async function GET() {
-  if (!(await requireAdmin())) {
+  if (!(await verifySession())) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
-  return NextResponse.json({ data: seedProducts });
+  return NextResponse.json({ data: await listAllProducts() });
 }
 
-// POST /api/admin/products — admin. Create product. STUB: echoes input.
+// POST /api/admin/products — create product.
 export async function POST(req: Request) {
-  if (!(await requireAdmin())) {
+  if (!(await verifySession())) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
-  const body = await req.json().catch(() => ({}));
-  // TODO: validate + insert into Supabase.
-  return NextResponse.json(
-    { data: { id: "new-product-id", ...body } },
-    { status: 201 },
-  );
+  const body = await req.json().catch(() => null);
+  const parsed = productInputSchema.safeParse(body);
+  if (!parsed.success) {
+    return NextResponse.json(
+      { error: parsed.error.issues[0]?.message ?? "Invalid input" },
+      { status: 400 },
+    );
+  }
+  const id = await createProduct(parsed.data);
+  return NextResponse.json({ data: { id } }, { status: 201 });
 }

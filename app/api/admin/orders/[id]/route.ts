@@ -1,21 +1,42 @@
 import { NextResponse } from "next/server";
-import type { OrderStatus } from "@/types";
+import { z } from "zod";
+import { verifySession } from "@/lib/dal";
+import { updateOrderStatus } from "@/db/repo";
 
-// TODO: replace with real Supabase Auth admin check (Feature 4).
-async function requireAdmin(): Promise<boolean> {
-  return true; // STUB.
-}
+const bodySchema = z.object({
+  status: z.enum([
+    "pending",
+    "paid",
+    "processing",
+    "shipped",
+    "completed",
+    "cancelled",
+    "failed",
+    "expired",
+  ]),
+});
 
-// PUT /api/admin/orders/[id] — admin. Update order status. STUB: echoes input.
+// PUT /api/admin/orders/[id] — update order status. Illegal transitions are
+// rejected at the repo layer (400), not just hidden in the UI.
 export async function PUT(
   req: Request,
   { params }: { params: Promise<{ id: string }> },
 ) {
-  if (!(await requireAdmin())) {
+  if (!(await verifySession())) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
   const { id } = await params;
-  const body = (await req.json().catch(() => ({}))) as { status?: OrderStatus };
-  // TODO: validate status transition + update in Supabase.
-  return NextResponse.json({ data: { id, status: body.status ?? "pending" } });
+  const parsed = bodySchema.safeParse(await req.json().catch(() => null));
+  if (!parsed.success) {
+    return NextResponse.json({ error: "Invalid status" }, { status: 400 });
+  }
+  try {
+    await updateOrderStatus(id, parsed.data.status);
+  } catch (e) {
+    return NextResponse.json(
+      { error: e instanceof Error ? e.message : "Update failed" },
+      { status: 400 },
+    );
+  }
+  return NextResponse.json({ data: { id, status: parsed.data.status } });
 }
