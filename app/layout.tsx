@@ -3,6 +3,7 @@ import { Geist, Geist_Mono, Playfair_Display } from "next/font/google";
 import "./globals.css";
 import { Providers } from "@/components/providers";
 import { Toaster } from "@/components/ui/sonner";
+import { SITE_URL } from "@/lib/seo";
 
 const geistSans = Geist({
   variable: "--font-sans",
@@ -21,6 +22,7 @@ const playfair = Playfair_Display({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
   title: {
     default: "Koka Scent",
     template: "%s · Koka Scent",
@@ -39,6 +41,19 @@ export default function RootLayout({
       lang="id"
       className={`${geistSans.variable} ${geistMono.variable} ${playfair.variable} h-full antialiased`}
     >
+      <head>
+        {/* <Reveal> hides its children in CSS until an IntersectionObserver
+            callback un-hides them. Without JS that callback never runs, so the
+            page would render blank. Un-hide everything up front instead. */}
+        <noscript>
+          <style
+            dangerouslySetInnerHTML={{
+              __html:
+                "[data-reveal]{opacity:1!important;transform:none!important}",
+            }}
+          />
+        </noscript>
+      </head>
       <body className="min-h-full flex flex-col">
         <Providers>{children}</Providers>
         <Toaster richColors position="top-center" />

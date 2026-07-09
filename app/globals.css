@@ -151,6 +151,120 @@
   }
   html {
     @apply font-sans;
+    scroll-behavior: smooth;
+  }
+}
+
+/*
+ * Motion — Editorial Warm.
+ *
+ * Everything below is opt-in via `data-reveal` / `.animate-*`, runs on
+ * compositor-friendly properties only (opacity + transform), and collapses to
+ * nothing under `prefers-reduced-motion`. Parallax and long fades make some
+ * people motion-sick; the reduce branch is a requirement, not a nicety.
+ */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Scroll reveal. `data-visible` is flipped by <Reveal> once the element
+ * intersects. Hidden by default, so the <noscript> escape hatch in the root
+ * layout must stay in place for JS-less visitors. */
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(1.5rem);
+  transition:
+    opacity 700ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 700ms cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+
+[data-reveal][data-visible="true"] {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal] {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Entrance animations for above-the-fold content, which must not wait on an
+ * IntersectionObserver callback — the hero is already in view on load. */
+@keyframes koka-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(1.5rem);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes koka-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes koka-plinth-rise {
+  from {
+    opacity: 0;
+    transform: translateY(2rem) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@utility animate-fade-up {
+  animation: koka-fade-up 800ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: var(--enter-delay, 0ms);
+}
+
+@utility animate-fade-in {
+  animation: koka-fade-in 900ms ease-out both;
+  animation-delay: var(--enter-delay, 0ms);
+}
+
+@utility animate-plinth-rise {
+  animation: koka-plinth-rise 1000ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: var(--enter-delay, 0ms);
+}
+
+/* Animate <details> open/close. Guarded by @supports because both
+ * `::details-content` and interpolating to `auto` are recent; where they're
+ * missing the selector simply never matches and the FAQ snaps open as usual. */
+@supports (interpolate-size: allow-keywords) {
+  :root {
+    interpolate-size: allow-keywords;
+  }
+
+  .faq-item::details-content {
+    block-size: 0;
+    overflow: hidden;
+    transition:
+      block-size 400ms cubic-bezier(0.22, 1, 0.36, 1),
+      content-visibility 400ms allow-discrete;
+  }
+
+  .faq-item[open]::details-content {
+    block-size: auto;
   }
 }
 
