@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { formatIDR } from "@/lib/format";
+import { highestPrice, lowestPrice } from "@/lib/price";
 import type { ProductWithVariants } from "@/types";
 
 export const CATEGORY_LABELS: Record<ProductWithVariants["category"], string> = {
@@ -13,12 +14,8 @@ export const CATEGORY_LABELS: Record<ProductWithVariants["category"], string> = 
 };
 
 function priceRange(product: ProductWithVariants) {
-  const prices =
-    product.variants.length > 0
-      ? product.variants.map((v) => v.priceOverride ?? product.price)
-      : [product.price];
-  const min = Math.min(...prices);
-  const max = Math.max(...prices);
+  const min = lowestPrice(product);
+  const max = highestPrice(product);
   return min === max
     ? formatIDR(min)
     : `${formatIDR(min)} – ${formatIDR(max)}`;
