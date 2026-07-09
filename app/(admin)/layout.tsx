@@ -1,8 +1,9 @@
 import Link from "next/link";
+import { AdminNav } from "@/components/admin/admin-nav";
 
 /**
- * Admin shell — placeholder. TODO: gate behind Supabase Auth (single `admin`
- * role, Feature 4). No auth wired yet.
+ * Admin shell — sidebar + topbar. Mock phase: no real auth; the signed-in user
+ * is a placeholder and "Keluar" just routes to the (mock) login page.
  */
 export default function AdminLayout({
   children,
@@ -11,28 +12,19 @@ export default function AdminLayout({
 }) {
   return (
     <div className="flex min-h-full">
-      <aside className="w-56 shrink-0 border-r border-sidebar-border bg-sidebar text-sidebar-foreground">
+      <aside className="flex w-56 shrink-0 flex-col border-r border-sidebar-border bg-sidebar text-sidebar-foreground">
         <div className="px-4 py-4 font-heading text-lg">Koka Admin</div>
-        <nav className="flex flex-col gap-1 px-2 text-sm">
+        <AdminNav />
+        <div className="mt-auto border-t border-sidebar-border px-4 py-3 text-xs">
+          <p className="font-medium text-sidebar-foreground">Admin Koka</p>
+          <p className="text-sidebar-foreground/70">admin@kokascent.id</p>
           <Link
-            href="/admin"
-            className="rounded-md px-3 py-2 hover:bg-sidebar-accent"
+            href="/admin/login"
+            className="mt-2 inline-block text-terracotta hover:underline"
           >
-            Dashboard
+            Keluar
           </Link>
-          <Link
-            href="/admin/products"
-            className="rounded-md px-3 py-2 hover:bg-sidebar-accent"
-          >
-            Produk
-          </Link>
-          <Link
-            href="/admin/orders"
-            className="rounded-md px-3 py-2 hover:bg-sidebar-accent"
-          >
-            Pesanan
-          </Link>
-        </nav>
+        </div>
       </aside>
       <main className="flex-1 px-6 py-6">{children}</main>
     </div>

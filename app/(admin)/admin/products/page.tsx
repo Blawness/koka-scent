@@ -1,17 +1,26 @@
 import type { Metadata } from "next";
+import Link from "next/link";
+import { Plus } from "lucide-react";
+import { ProductTable } from "@/components/admin/product-table";
+import { Button } from "@/components/ui/button";
+import { mockProducts } from "@/lib/mock/admin-data";
 
-export const metadata: Metadata = { title: "Admin · Produk" };
+export const metadata: Metadata = { title: "Produk" };
 
-// Admin product management — placeholder. TODO: CRUD, stock, images, variants,
-// notes (Feature 4).
 export default function AdminProductsPage() {
   return (
-    <section className="space-y-4">
-      <h1 className="font-heading text-3xl">Produk</h1>
-      <p className="text-muted-foreground">
-        Placeholder — tabel produk, tambah/edit/nonaktifkan, dan kelola stok akan
-        tampil di sini.
-      </p>
+    <section className="space-y-6">
+      <div className="flex items-center justify-between">
+        <h1 className="font-heading text-3xl">Produk</h1>
+        <Button asChild>
+          <Link href="/admin/products/new">
+            <Plus /> Tambah Produk
+          </Link>
+        </Button>
+      </div>
+      <div className="rounded-lg border border-border">
+        <ProductTable products={mockProducts} />
+      </div>
     </section>
   );
 }
