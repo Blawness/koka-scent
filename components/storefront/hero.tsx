@@ -16,25 +16,24 @@ export function Hero({ product }: { product: ProductWithVariants }) {
           style={enter(0)}
           className="animate-fade-up block text-xs font-medium tracking-[0.25em] text-muted-foreground uppercase"
         >
-          Parfum Terinspirasi Jepang
+          An Oil Based Perfume
         </span>
         <h1
           style={enter(80)}
           className="animate-fade-up font-heading text-4xl leading-[1.05] text-foreground sm:text-5xl lg:text-6xl"
         >
-          Wangi yang <em className="text-terracotta not-italic">membekas</em>,
-          cerita yang menetap.
+          Made to Be <em className="text-terracotta not-italic">Remembered</em>.
         </h1>
         <p
           style={enter(160)}
           className="animate-fade-up max-w-md text-base text-muted-foreground"
         >
-          Koleksi eau de parfum & diffuser dengan notes yang dirancang untuk
-          menemani momen tenang harimu.
+          Long-lasting fragrances designed to leave a memorable impression
+          wherever you go.
         </p>
         <div style={enter(240)} className="animate-fade-up flex flex-wrap gap-3">
           <Button asChild size="lg" className="rounded-full">
-            <Link href="/products">Belanja Sekarang</Link>
+            <Link href="/products">Shop Now</Link>
           </Button>
           <Button
             asChild
@@ -42,7 +41,7 @@ export function Hero({ product }: { product: ProductWithVariants }) {
             variant="outline"
             className="rounded-full"
           >
-            <Link href="/products">Lihat Koleksi</Link>
+            <Link href="/products">Our Products</Link>
           </Button>
         </div>
       </div>
@@ -65,7 +64,7 @@ export function Hero({ product }: { product: ProductWithVariants }) {
           style={enter(400)}
           className="display-number animate-fade-in pointer-events-none absolute -top-4 -left-2 text-7xl text-terracotta/80 sm:text-8xl"
         >
-          No 01
+          001 Dakishimete
         </span>
         <div
           style={enter(480)}

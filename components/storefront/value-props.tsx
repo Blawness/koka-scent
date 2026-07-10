@@ -2,19 +2,19 @@ import { Reveal } from "@/components/reveal";
 
 const PROPS = [
   {
-    title: "Notes Autentik",
-    body: "Diracik dari bahan parfum grade premium, bukan pewangi sintetis biasa.",
+    title: "Why KOKA?",
+    body: "Crafted with high-grade fragrance oils to deliver a refined and authentic scent experience.",
   },
   {
-    title: "Tahan 8+ Jam",
-    body: "Konsentrasi eau de parfum, menetap dari pagi sampai petang.",
+    title: "All-Day Wear",
+    body: "Oil Based Perfume concentration that stays with you for 8+ hours.",
   },
   {
-    title: "Kirim Seluruh Indonesia",
-    body: "Dikemas aman dengan bubble wrap dan dikirim dari Jakarta setiap hari kerja.",
+    title: "Delivered with Care",
+    body: "Securely packed and shipped across Indonesia.",
   },
   {
-    title: "Garansi Keaslian",
+    title: "100% Authentic",
     body: "Setiap botol bersegel. Tidak sesuai deskripsi, kami ganti.",
   },
 ];

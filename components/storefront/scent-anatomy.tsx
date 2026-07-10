@@ -4,20 +4,20 @@ import { SectionHeading } from "@/components/storefront/section-heading";
 const LAYERS = [
   {
     index: "01",
-    label: "Top Notes",
-    duration: "15–30 menit pertama",
-    body: "Kesan pertama yang kamu cium begitu disemprot. Biasanya citrus atau aroma hijau yang segar dan cepat menguap — yuzu, bergamot, daun shiso.",
+    label: "The First Impression",
+    duration: "Top Notes · 0–30 Minutes",
+    body: "Fresh, vibrant, and instantly captivating. These opening notes introduce the fragrance with a bright burst of energy before gently unfolding into something deeper.",
   },
   {
     index: "02",
-    label: "Middle Notes",
-    duration: "2–4 jam berikutnya",
-    body: "Jantung dari parfum. Muncul saat top notes memudar dan bertahan paling lama di kulit — sakura, melati, teratai putih.",
+    label: "The Heart of KOKA",
+    duration: "Heart Notes · 30 Minutes–4 Hours",
+    body: "Where the fragrance finds its true identity. Soft florals and delicate accords bloom gracefully, creating the signature character of every KOKA scent.",
   },
   {
     index: "03",
-    label: "Base Notes",
-    duration: "Sisa hari",
+    label: "The Lasting Signature",
+    duration: "Base Notes · 4+ Hours",
     body: "Fondasi yang membekas di pakaian sampai esok hari. Aroma kayu dan resin yang dalam — cendana, vanila, musk.",
   },
 ];
@@ -30,11 +30,11 @@ export function ScentAnatomy() {
   return (
     <section className="space-y-8">
       <Reveal className="space-y-4">
-        <SectionHeading eyebrow="Pelajari" title="Anatomi Wangi" />
+        <SectionHeading eyebrow="Introduction" title="The KOKA Scent Journey" />
         <p className="max-w-2xl text-base text-muted-foreground">
-          Parfum tidak berbau sama sepanjang hari. Ia terbuka, mekar, lalu
-          mengendap dalam tiga lapisan. Memahami ketiganya membuatmu tahu wangi
-          seperti apa yang benar-benar akan menemanimu.
+          Every KOKA fragrance is crafted to evolve with you. From the first
+          spray to the final trace, each layer is thoughtfully composed to
+          create a scent that feels refined, balanced, and unforgettable.
         </p>
       </Reveal>
 

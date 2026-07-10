@@ -19,7 +19,7 @@ export default function StorefrontLayout({
             href="/"
             className="font-heading text-xl tracking-wide text-foreground"
           >
-            Koka Scent
+            KOKA SCENT
           </Link>
           <nav className="flex items-center gap-1 rounded-full border border-border/70 bg-card/60 p-1 text-sm shadow-soft">
             <Button asChild variant="ghost" size="sm" className="rounded-full">
@@ -53,7 +53,7 @@ export default function StorefrontLayout({
             </Button>
           </div>
           <p className="text-sm text-muted-foreground">
-            © {new Date().getFullYear()} Koka Scent — Parfum terinspirasi Jepang.
+            © {new Date().getFullYear()} Koka Scent — An Oil Based Perfume
           </p>
         </div>
       </footer>

@@ -25,7 +25,7 @@ import {
 export const metadata: Metadata = {
   title: { absolute: "Koka Scent — Parfum Terinspirasi Jepang" },
   description:
-    "Eau de parfum dan diffuser terinspirasi Jepang, diracik dalam batch kecil. Notes autentik, tahan 8+ jam, dikirim ke seluruh Indonesia.",
+    "Parfum oil-based terinspirasi Jepang, diracik dalam batch kecil. Notes autentik, tahan 8+ jam, dikirim ke seluruh Indonesia.",
   alternates: { canonical: "/" },
   openGraph: {
     type: "website",
@@ -33,7 +33,7 @@ export const metadata: Metadata = {
     siteName: "Koka Scent",
     title: "Koka Scent — Parfum Terinspirasi Jepang",
     description:
-      "Eau de parfum dan diffuser terinspirasi Jepang, diracik dalam batch kecil. Notes autentik, tahan 8+ jam.",
+      "Parfum oil-based terinspirasi Jepang, diracik dalam batch kecil. Notes autentik, tahan 8+ jam.",
     url: "/",
   },
 };
