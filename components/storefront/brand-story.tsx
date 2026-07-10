@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { SectionHeading } from "@/components/storefront/section-heading";
 
 const STATS = [
-  { value: "12", label: "Aroma dalam koleksi" },
+  { value: "8", label: "Aroma dalam koleksi" },
   { value: "8 jam", label: "Ketahanan rata-rata" },
   { value: "2019", label: "Tahun kami mulai" },
 ];

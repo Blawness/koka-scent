@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { CartNavLink } from "@/components/storefront/cart-nav-link";
@@ -15,11 +16,15 @@ export default function StorefrontLayout({
     <div className="flex min-h-full flex-col bg-background">
       <header className="sticky top-0 z-40 border-b border-border/60 bg-background/80 backdrop-blur">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
-          <Link
-            href="/"
-            className="font-heading text-xl tracking-wide text-foreground"
-          >
-            KOKA SCENT
+          <Link href="/" className="shrink-0">
+            <Image
+              src="/koka-logo.png"
+              alt="Koka Scent"
+              width={221}
+              height={128}
+              className="h-9 w-auto"
+              priority
+            />
           </Link>
           <nav className="flex items-center gap-1 rounded-full border border-border/70 bg-card/60 p-1 text-sm shadow-soft">
             <Button asChild variant="ghost" size="sm" className="rounded-full">
