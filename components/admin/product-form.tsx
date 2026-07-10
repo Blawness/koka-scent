@@ -22,6 +22,7 @@ import {
 } from "@/components/ui/select";
 import { CATEGORY_LABEL } from "@/lib/order-status";
 import { UploadButton } from "@/lib/uploadthing";
+import { convertFilesToWebP } from "@/lib/image-compression";
 import type { ProductCategory, ProductWithVariants } from "@/types";
 
 const CATEGORIES = Object.keys(CATEGORY_LABEL) as ProductCategory[];
@@ -283,6 +284,7 @@ export function ProductForm({
         </p>
         <UploadButton
           endpoint="productImage"
+          onBeforeUploadBegin={convertFilesToWebP}
           onClientUploadComplete={(res) => {
             setImages((prev) => [...prev, ...res.map((f) => f.url)]);
             toast.success(`${res.length} gambar diunggah`);

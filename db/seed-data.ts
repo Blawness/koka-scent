@@ -20,8 +20,8 @@ export const seedProducts: ProductWithVariants[] = [
     category: "oil_based_perfume",
     price: 115000,
     images: [
-      "https://kl0d0mysr3.ufs.sh/f/tg4KtOa16LAriaPEzqVC4wOXoRhxsNSnEg1TI76zUtJcjPpr",
-      "https://kl0d0mysr3.ufs.sh/f/tg4KtOa16LArYX5N5JeiFSMHsG3oemufcP2Cdw5VhERakzQv",
+      "https://kl0d0mysr3.ufs.sh/f/tg4KtOa16LArGWfrATqnoHZx32CVzMYefFWPglRtIJ7Skphr",
+      "https://kl0d0mysr3.ufs.sh/f/tg4KtOa16LArqFj5tRmMLXgC5fQ6Azp7xdtDuV8l30yFiwnE",
     ],
     notesTop: "Black Peony, Raspberry Liqueur, Praline",
     notesMiddle: "",
@@ -40,8 +40,8 @@ export const seedProducts: ProductWithVariants[] = [
     category: "oil_based_perfume",
     price: 115000,
     images: [
-      "https://kl0d0mysr3.ufs.sh/f/tg4KtOa16LArKPaKv0HoTLflHIDiOYWMVa1FU562ZQh3kKRy",
-      "https://kl0d0mysr3.ufs.sh/f/tg4KtOa16LArbEsdfb7n3fou4HWt1jLzpBZKvJFsI2yR9qd8",
+      "https://kl0d0mysr3.ufs.sh/f/tg4KtOa16LArvG3XiJOrCHje0iPL49yMphE1usY7AzxtSmvX",
+      "https://kl0d0mysr3.ufs.sh/f/tg4KtOa16LArJ7Uta4xgGm7A3DXdyaW4OCUlxoI89cskMRj1",
     ],
     notesTop: "Green Apple, Mysore Sandalwood, Musk, Sweet Peach",
     notesMiddle: "",
@@ -60,8 +60,8 @@ export const seedProducts: ProductWithVariants[] = [
     category: "oil_based_perfume",
     price: 115000,
     images: [
-      "https://kl0d0mysr3.ufs.sh/f/tg4KtOa16LAreUcbNRlakvgOsLTYcR6fNMVUXp1t3BhDuyEP",
-      "https://kl0d0mysr3.ufs.sh/f/tg4KtOa16LArprzzZfBvstUXROqPL3YuZl7FSGxoA9wK0T2z",
+      "https://kl0d0mysr3.ufs.sh/f/tg4KtOa16LArHsOBXOizg8oNdnBLpwPSrekUYQxOIEbWT92u",
+      "https://kl0d0mysr3.ufs.sh/f/tg4KtOa16LAroSPk5kIguRDiB9QjtGnEmHp7Y2e0brdg81OU",
     ],
     notesTop:
       "Green and Pink Grapefruit, Iris and Bulgarian Rose, Heliotrope and Woodsy",
@@ -81,8 +81,8 @@ export const seedProducts: ProductWithVariants[] = [
     category: "oil_based_perfume",
     price: 115000,
     images: [
-      "https://kl0d0mysr3.ufs.sh/f/tg4KtOa16LAr8XEc2mhUEVNBQILpRA5lS96r0bMChvPnGwHd",
-      "https://kl0d0mysr3.ufs.sh/f/tg4KtOa16LArpDiTIiBvstUXROqPL3YuZl7FSGxoA9wK0T2z",
+      "https://kl0d0mysr3.ufs.sh/f/tg4KtOa16LArpeOHvQBvstUXROqPL3YuZl7FSGxoA9wK0T2z",
+      "https://kl0d0mysr3.ufs.sh/f/tg4KtOa16LAr1HnB0aL42AcXnevtfOyTwxqQGKN3hSJ1gUdL",
     ],
     notesTop: "Rangon Creeper, Tuberose, Jasmine",
     notesMiddle: "",
@@ -101,8 +101,8 @@ export const seedProducts: ProductWithVariants[] = [
     category: "oil_based_perfume",
     price: 115000,
     images: [
-      "https://kl0d0mysr3.ufs.sh/f/tg4KtOa16LArxYECta6Hl0U8eK25bCcuViaFTYLw6r1skWZR",
-      "https://kl0d0mysr3.ufs.sh/f/tg4KtOa16LAr8zZl3whUEVNBQILpRA5lS96r0bMChvPnGwHd",
+      "https://kl0d0mysr3.ufs.sh/f/tg4KtOa16LAryMFhmkyvz5eBDbJlXoS9vfC3wI0Yg8iEdcuZ",
+      "https://kl0d0mysr3.ufs.sh/f/tg4KtOa16LAreHBFanGlakvgOsLTYcR6fNMVUXp1t3BhDuyE",
     ],
     notesTop: "Coconut and Vanilla",
     notesMiddle: "",
@@ -121,8 +121,8 @@ export const seedProducts: ProductWithVariants[] = [
     category: "oil_based_perfume",
     price: 115000,
     images: [
-      "https://kl0d0mysr3.ufs.sh/f/tg4KtOa16LAriyn1P7VC4wOXoRhxsNSnEg1TI76zUtJcjPpr",
-      "https://kl0d0mysr3.ufs.sh/f/tg4KtOa16LArBlouZuscowLqH2FnglyYVeT6iRZj971vCG0K",
+      "https://kl0d0mysr3.ufs.sh/f/tg4KtOa16LArOrU7R3gMLAgaPmu12W4ZwKqUOnRHyVj3hN6f",
+      "https://kl0d0mysr3.ufs.sh/f/tg4KtOa16LArzVw1Qqtak2TUw5CivZGS4WBxcENt3X1K6VbP",
     ],
     notesTop:
       "Blackberry, Pear, Bergamot, Marshmallow, Frangipani, Vanilla, Wood",
@@ -142,8 +142,8 @@ export const seedProducts: ProductWithVariants[] = [
     category: "oil_based_perfume",
     price: 115000,
     images: [
-      "https://kl0d0mysr3.ufs.sh/f/tg4KtOa16LArOE7SvLMLAgaPmu12W4ZwKqUOnRHyVj3hN6f9",
-      "https://kl0d0mysr3.ufs.sh/f/tg4KtOa16LArPgjEB1rEw2qcliWsL4GQ9M8h70AB5UDufOPb",
+      "https://kl0d0mysr3.ufs.sh/f/tg4KtOa16LArN9OZWNGkSfoCNxX8WstiA7FObn3pTmMlGYhD",
+      "https://kl0d0mysr3.ufs.sh/f/tg4KtOa16LArBpdvTqscowLqH2FnglyYVeT6iRZj971vCG0K",
     ],
     notesTop: "Pepper, Oakmoss, Citrus, Lemon, Geranium",
     notesMiddle: "",
@@ -162,8 +162,8 @@ export const seedProducts: ProductWithVariants[] = [
     category: "oil_based_perfume",
     price: 115000,
     images: [
-      "https://kl0d0mysr3.ufs.sh/f/tg4KtOa16LArNaMAqFGkSfoCNxX8WstiA7FObn3pTmMlGYhD",
-      "https://kl0d0mysr3.ufs.sh/f/tg4KtOa16LArZY8LNBbeCVknqsiSjLhztINl9Qa0pPMDO5Kx",
+      "https://kl0d0mysr3.ufs.sh/f/tg4KtOa16LAr2MMjhnZf9sUB8xNWV5rEjLzHeqbGgD3yn1td",
+      "https://kl0d0mysr3.ufs.sh/f/tg4KtOa16LArGftocpqnoHZx32CVzMYefFWPglRtIJ7Skphr",
     ],
     notesTop:
       "Earl Grey Tea, Rice, Jasmine, Lily-of-the-Valley, Pepper, Iris, Amber",
