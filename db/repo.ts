@@ -19,10 +19,11 @@ import {
 import { db } from "./client";
 import {
   adminUsers,
-  orderItems,
   orders,
-  productVariants,
+  orderItems,
   products,
+  productVariants,
+  reviews,
 } from "./schema";
 import { seedProducts } from "./seed-data";
 import type {
@@ -628,4 +629,34 @@ export async function getDashboardSummary(): Promise<DashboardSummary> {
     revenueThisWeek: revenue,
     lowStock: lowRows.map(mapProductRow),
   };
+}
+
+export async function listPublishedReviews(): Promise<
+  Array<{
+    id: string;
+    customerName: string;
+    customerCity: string;
+    rating: number;
+    comment: string;
+    productName: string;
+    productSlug: string;
+    createdAt: Date;
+  }>
+> {
+  const database = requireDb();
+  const rows = await database.query.reviews.findMany({
+    where: eq(reviews.isPublished, true),
+    with: { product: true },
+    orderBy: [desc(reviews.createdAt)],
+  });
+  return rows.map((r) => ({
+    id: r.id,
+    customerName: r.customerName,
+    customerCity: r.customerCity,
+    rating: r.rating,
+    comment: r.comment,
+    productName: r.product?.name ?? "Produk",
+    productSlug: r.product?.slug ?? "",
+    createdAt: r.createdAt,
+  }));
 }

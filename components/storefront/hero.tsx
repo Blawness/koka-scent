@@ -8,7 +8,15 @@ import type { ProductWithVariants } from "@/types";
 /** Staggered entrance. Above the fold, so it animates on load rather than on scroll. */
 const enter = (ms: number) => ({ "--enter-delay": `${ms}ms` }) as React.CSSProperties;
 
+/** Product names read "001 Dakishimete" — the numeral is set apart as display type. */
+function splitName(name: string): [string, string] {
+  const match = name.match(/^(\d+)\s+(.*)$/);
+  return match ? [match[1], match[2]] : ["", name];
+}
+
 export function Hero({ product }: { product: ProductWithVariants }) {
+  const [numeral, title] = splitName(product.name);
+
   return (
     <section className="grid items-center gap-10 py-6 lg:grid-cols-2 lg:py-10">
       <div className="space-y-6">
@@ -62,9 +70,14 @@ export function Hero({ product }: { product: ProductWithVariants }) {
         </div>
         <span
           style={enter(400)}
-          className="display-number animate-fade-in pointer-events-none absolute -top-4 -left-2 text-7xl text-terracotta/80 sm:text-8xl"
+          className="animate-fade-in pointer-events-none absolute -top-6 -left-2 hidden flex-col gap-1 sm:flex"
         >
-          001 Dakishimete
+          <span className="display-number text-7xl text-terracotta/80 sm:text-8xl">
+            {numeral}
+          </span>
+          <span className="text-xs font-medium tracking-[0.25em] text-terracotta/70 uppercase">
+            {title}
+          </span>
         </span>
         <div
           style={enter(480)}

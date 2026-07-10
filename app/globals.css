@@ -221,6 +221,26 @@
   }
 }
 
+@keyframes koka-marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@utility animate-marquee {
+  animation: koka-marquee var(--marquee-duration, 100s) linear infinite;
+  animation-delay: var(--marquee-delay, 0ms);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-marquee {
+    animation: none;
+  }
+}
+
 @keyframes koka-plinth-rise {
   from {
     opacity: 0;
