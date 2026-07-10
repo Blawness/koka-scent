@@ -1,4 +1,5 @@
 import { AdminNav } from "@/components/admin/admin-nav";
+import { ThemeToggle } from "@/components/theme-toggle";
 import { verifySession } from "@/lib/dal";
 import { signOut } from "@/auth";
 
@@ -15,9 +16,12 @@ export default async function AdminLayout({
   const user = await verifySession();
 
   return (
-    <div className="flex min-h-full">
-      <aside className="flex w-56 shrink-0 flex-col border-r border-sidebar-border bg-sidebar text-sidebar-foreground">
-        <div className="px-4 py-4 font-heading text-lg">Koka Admin</div>
+    <div className="flex min-h-dvh">
+      <aside className="sticky top-0 flex h-dvh w-56 shrink-0 flex-col border-r border-sidebar-border bg-sidebar text-sidebar-foreground">
+        <div className="flex items-center justify-between px-4 py-4">
+          <span className="font-heading text-lg">Koka Admin</span>
+          <ThemeToggle />
+        </div>
         <AdminNav />
         <div className="mt-auto border-t border-sidebar-border px-4 py-3 text-xs">
           <p className="font-medium text-sidebar-foreground">

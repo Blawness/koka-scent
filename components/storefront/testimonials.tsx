@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { Reveal } from "@/components/reveal";
 import { SectionHeading } from "@/components/storefront/section-heading";
 import { listPublishedReviews } from "@/db/repo";
@@ -13,6 +14,8 @@ export async function Testimonials() {
     quote: r.comment,
     name: r.customerName,
     city: r.customerCity,
+    product: r.productName,
+    slug: r.productSlug,
   }));
 
   const loop = [...base, ...base];
@@ -32,12 +35,26 @@ export async function Testimonials() {
               <blockquote className="font-heading text-lg leading-relaxed text-foreground flex-1 overflow-hidden">
                 &ldquo;{testimonial.quote}&rdquo;
               </blockquote>
-              <figcaption className="text-sm text-muted-foreground flex-shrink-0 mt-4">
-                <span className="font-medium text-foreground">
-                  {testimonial.name}
-                </span>
-                {" · "}
-                {testimonial.city}
+              <figcaption className="flex-shrink-0 space-y-2 text-sm text-muted-foreground">
+                {testimonial.slug ? (
+                  <Link
+                    href={`/products/${testimonial.slug}`}
+                    className="inline-flex rounded-full border border-border bg-background px-3 py-1 text-xs font-medium text-foreground transition-colors hover:bg-muted"
+                  >
+                    {testimonial.product}
+                  </Link>
+                ) : (
+                  <span className="inline-flex rounded-full border border-border bg-background px-3 py-1 text-xs font-medium text-foreground">
+                    {testimonial.product}
+                  </span>
+                )}
+                <div>
+                  <span className="font-medium text-foreground">
+                    {testimonial.name}
+                  </span>
+                  {" · "}
+                  {testimonial.city}
+                </div>
               </figcaption>
             </figure>
           ))}

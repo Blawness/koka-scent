@@ -7,7 +7,7 @@ import { createAdminUser } from "./repo";
 import { hashPassword } from "../lib/auth/password";
 
 async function main() {
-  const email = (process.env.ADMIN_EMAIL ?? "admin@kokascent.id")
+  const email = (process.env.ADMIN_EMAIL ?? "admin@kokascent.com")
     .toLowerCase()
     .trim();
   const password = process.env.ADMIN_PASSWORD ?? "admin12345";

@@ -12,6 +12,7 @@
     "db:seed": "tsx --env-file=.env db/seed.ts",
     "db:seed-admin": "tsx --env-file=.env db/seed-admin.ts",
     "db:seed-orders": "tsx --env-file=.env db/seed-orders.ts",
+    "db:seed-reviews": "tsx --env-file=.env db/seed-reviews.ts",
     "test": "vitest run"
   },
   "dependencies": {

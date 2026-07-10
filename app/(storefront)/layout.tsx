@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { CartNavLink } from "@/components/storefront/cart-nav-link";
+import { ThemeToggle } from "@/components/theme-toggle";
 
 /**
  * Storefront shell (public) — Editorial Warm v2. Pill nav header + pill footer
@@ -36,6 +37,7 @@ export default function StorefrontLayout({
             <div className="rounded-full px-2">
               <CartNavLink />
             </div>
+            <ThemeToggle />
           </nav>
         </div>
       </header>
