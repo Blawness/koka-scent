@@ -3,10 +3,7 @@ import { Reveal } from "@/components/reveal";
 import { SectionHeading } from "@/components/storefront/section-heading";
 
 const CATEGORIES: { index: string; slug: string; label: string }[] = [
-  { index: "01", slug: "unisex", label: "Unisex" },
-  { index: "02", slug: "wanita", label: "Wanita" },
-  { index: "03", slug: "pria", label: "Pria" },
-  { index: "04", slug: "diffuser", label: "Diffuser" },
+  { index: "01", slug: "oil_based_perfume", label: "Oil Based Perfume" },
 ];
 
 export function CategoryIndex() {

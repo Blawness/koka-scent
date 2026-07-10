@@ -2,12 +2,7 @@ import { NextResponse, type NextRequest } from "next/server";
 import { listActiveProducts } from "@/db/repo";
 import type { ProductCategory } from "@/types";
 
-const VALID_CATEGORIES: ProductCategory[] = [
-  "unisex",
-  "wanita",
-  "pria",
-  "diffuser",
-];
+const VALID_CATEGORIES: ProductCategory[] = ["oil_based_perfume"];
 
 function isProductCategory(value: string | null): value is ProductCategory {
   return VALID_CATEGORIES.includes(value as ProductCategory);

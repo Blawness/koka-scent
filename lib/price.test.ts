@@ -18,9 +18,10 @@ function product(
 ): ProductWithVariants {
   return {
     id: "p1",
+    sku: "KS-001",
     slug: "sakura-senja",
     name: "Sakura Senja",
-    category: "wanita",
+    category: "oil_based_perfume",
     price: 289_000,
     images: [],
     notesTop: "Pink Pepper",

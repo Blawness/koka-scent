@@ -20,6 +20,7 @@ async function main() {
     const [row] = await db
       .insert(products)
       .values({
+        sku: product.sku,
         slug: product.slug,
         name: product.name,
         category: product.category,
@@ -34,6 +35,7 @@ async function main() {
       .onConflictDoUpdate({
         target: products.slug,
         set: {
+          sku: product.sku,
           name: product.name,
           category: product.category,
           price: product.price,

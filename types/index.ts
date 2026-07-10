@@ -1,7 +1,7 @@
 // Data models — PRD Section 5.
 // These mirror the Supabase schema in supabase/migrations.
 
-export type ProductCategory = "unisex" | "wanita" | "pria" | "diffuser";
+export type ProductCategory = "oil_based_perfume";
 
 export type OrderStatus =
   | "pending"
@@ -15,6 +15,7 @@ export type OrderStatus =
 
 export type Product = {
   id: string; // UUID
+  sku: string; // real supplier SKU, e.g. "KS-001"
   slug: string;
   name: string;
   category: ProductCategory;

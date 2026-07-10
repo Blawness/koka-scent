@@ -29,6 +29,13 @@
       "when": 1783589789963,
       "tag": "0003_luxuriant_talisman",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1783687005259,
+      "tag": "0004_flaky_bloodstrike",
+      "breakpoints": true
     }
   ]
 }

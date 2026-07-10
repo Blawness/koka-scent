@@ -3,7 +3,7 @@ import { priceLineItems } from "./order-pricing";
 import type { ProductWithVariants } from "@/types";
 
 const base = {
-  category: "unisex" as const,
+  category: "oil_based_perfume" as const,
   images: [],
   notesTop: "",
   notesMiddle: "",
@@ -16,6 +16,7 @@ const products: ProductWithVariants[] = [
   {
     ...base,
     id: "p1",
+    sku: "KS-P1",
     slug: "p1",
     name: "Aroma Satu",
     price: 100000,
@@ -29,6 +30,7 @@ const products: ProductWithVariants[] = [
   {
     ...base,
     id: "p2",
+    sku: "KS-P2",
     slug: "p2",
     name: "Aroma Nonaktif",
     price: 200000,

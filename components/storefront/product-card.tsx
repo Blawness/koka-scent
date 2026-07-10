@@ -7,10 +7,7 @@ import { highestPrice, lowestPrice } from "@/lib/price";
 import type { ProductWithVariants } from "@/types";
 
 export const CATEGORY_LABELS: Record<ProductWithVariants["category"], string> = {
-  unisex: "Unisex",
-  wanita: "Wanita",
-  pria: "Pria",
-  diffuser: "Diffuser",
+  oil_based_perfume: "Oil Based Perfume",
 };
 
 function priceRange(product: ProductWithVariants) {

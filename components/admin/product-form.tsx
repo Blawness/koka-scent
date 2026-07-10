@@ -21,6 +21,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { CATEGORY_LABEL } from "@/lib/order-status";
+import { UploadButton } from "@/lib/uploadthing";
 import type { ProductCategory, ProductWithVariants } from "@/types";
 
 const CATEGORIES = Object.keys(CATEGORY_LABEL) as ProductCategory[];
@@ -54,10 +55,11 @@ export function ProductForm({
   const [pending, startTransition] = useTransition();
 
   const [name, setName] = useState(product?.name ?? "");
+  const [sku, setSku] = useState(product?.sku ?? "");
   const [slug, setSlug] = useState(product?.slug ?? "");
   const [slugEdited, setSlugEdited] = useState(isEdit);
   const [category, setCategory] = useState<ProductCategory>(
-    product?.category ?? "unisex",
+    product?.category ?? "oil_based_perfume",
   );
   const [price, setPrice] = useState(String(product?.price ?? ""));
   const [stock, setStock] = useState(String(product?.stock ?? ""));
@@ -109,6 +111,10 @@ export function ProductForm({
       toast.error("Nama produk wajib diisi");
       return;
     }
+    if (!sku.trim()) {
+      toast.error("SKU wajib diisi");
+      return;
+    }
     if (!price || Number(price) <= 0) {
       toast.error("Harga harus lebih dari 0");
       return;
@@ -116,6 +122,7 @@ export function ProductForm({
 
     const payload = {
       name: name.trim(),
+      sku: sku.trim(),
       slug: slug.trim(),
       category,
       price: Number(price),
@@ -162,6 +169,15 @@ export function ProductForm({
             value={name}
             onChange={(e) => onNameChange(e.target.value)}
             placeholder="mis. Sakura Senja"
+          />
+        </div>
+        <div className="space-y-1.5">
+          <Label htmlFor="sku">SKU</Label>
+          <Input
+            id="sku"
+            value={sku}
+            onChange={(e) => setSku(e.target.value)}
+            placeholder="KS-001"
           />
         </div>
         <div className="space-y-1.5">
@@ -262,9 +278,19 @@ export function ProductForm({
       <fieldset className="space-y-3">
         <legend className="font-heading text-lg">Gambar</legend>
         <p className="text-xs text-muted-foreground">
-          Fase mock: tempel URL gambar (unggah UploadThing menyusul). Urutan
+          Unggah lewat UploadThing, atau tempel URL gambar langsung. Urutan
           pertama menjadi gambar utama.
         </p>
+        <UploadButton
+          endpoint="productImage"
+          onClientUploadComplete={(res) => {
+            setImages((prev) => [...prev, ...res.map((f) => f.url)]);
+            toast.success(`${res.length} gambar diunggah`);
+          }}
+          onUploadError={(error) => {
+            toast.error(`Gagal unggah: ${error.message}`);
+          }}
+        />
         <div className="flex gap-2">
           <Input
             value={newImage}

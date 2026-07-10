@@ -59,8 +59,5 @@ export const STATUS_LABEL: Record<OrderStatus, string> = {
 };
 
 export const CATEGORY_LABEL: Record<ProductCategory, string> = {
-  unisex: "Unisex",
-  wanita: "Wanita",
-  pria: "Pria",
-  diffuser: "Diffuser",
+  oil_based_perfume: "Oil Based Perfume",
 };

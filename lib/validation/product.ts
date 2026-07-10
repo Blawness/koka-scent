@@ -11,11 +11,12 @@ export const productVariantSchema = z.object({
 
 export const productInputSchema = z.object({
   name: z.string().min(1, "Nama wajib diisi"),
+  sku: z.string().min(1, "SKU wajib diisi"),
   slug: z
     .string()
     .min(1, "Slug wajib diisi")
     .regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/, "Slug hanya huruf kecil, angka, tanda -"),
-  category: z.enum(["unisex", "wanita", "pria", "diffuser"]),
+  category: z.enum(["oil_based_perfume"]),
   price: z.number().int().positive("Harga harus lebih dari 0"),
   stock: z.number().int().min(0),
   notesTop: z.string(),

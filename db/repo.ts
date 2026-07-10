@@ -43,6 +43,7 @@ type ProductRow = typeof products.$inferSelect & {
 function mapProductRow(row: ProductRow): ProductWithVariants {
   return {
     id: row.id,
+    sku: row.sku,
     slug: row.slug,
     name: row.name,
     category: row.category,
@@ -401,6 +402,7 @@ export type ProductVariantInput = {
 
 export type ProductInput = {
   name: string;
+  sku: string;
   slug: string;
   category: ProductCategory;
   price: number;
@@ -458,6 +460,7 @@ export async function createProduct(input: ProductInput): Promise<string> {
   const [row] = await database
     .insert(products)
     .values({
+      sku: input.sku,
       slug: input.slug,
       name: input.name,
       category: input.category,
@@ -482,6 +485,7 @@ export async function updateProduct(
   await database
     .update(products)
     .set({
+      sku: input.sku,
       slug: input.slug,
       name: input.name,
       category: input.category,
