@@ -25,8 +25,10 @@ import type { ProductWithVariants } from "@/types";
  */
 export function ProductTable({
   products,
+  canWrite,
 }: {
   products: ProductWithVariants[];
+  canWrite: boolean;
 }) {
   const [active, setActive] = useState<Record<string, boolean>>(() =>
     Object.fromEntries(products.map((p) => [p.id, p.isActive])),
@@ -60,7 +62,7 @@ export function ProductTable({
           <TableHead className="text-right">Harga</TableHead>
           <TableHead className="text-right">Stok</TableHead>
           <TableHead>Status</TableHead>
-          <TableHead className="text-right">Aksi</TableHead>
+          {canWrite && <TableHead className="text-right">Aksi</TableHead>}
         </TableRow>
       </TableHeader>
       <TableBody>
@@ -98,21 +100,23 @@ export function ProductTable({
                   {isActive ? "Aktif" : "Nonaktif"}
                 </Badge>
               </TableCell>
-              <TableCell>
-                <div className="flex justify-end gap-1">
-                  <Button asChild size="sm" variant="outline">
-                    <Link href={`/admin/products/${p.id}`}>Edit</Link>
-                  </Button>
-                  <Button
-                    size="sm"
-                    variant={isActive ? "ghost" : "secondary"}
-                    disabled={pending}
-                    onClick={() => toggle(p)}
-                  >
-                    {isActive ? "Nonaktifkan" : "Aktifkan"}
-                  </Button>
-                </div>
-              </TableCell>
+              {canWrite && (
+                <TableCell>
+                  <div className="flex justify-end gap-1">
+                    <Button asChild size="sm" variant="outline">
+                      <Link href={`/admin/products/${p.id}`}>Edit</Link>
+                    </Button>
+                    <Button
+                      size="sm"
+                      variant={isActive ? "ghost" : "secondary"}
+                      disabled={pending}
+                      onClick={() => toggle(p)}
+                    >
+                      {isActive ? "Nonaktifkan" : "Aktifkan"}
+                    </Button>
+                  </div>
+                </TableCell>
+              )}
             </TableRow>
           );
         })}

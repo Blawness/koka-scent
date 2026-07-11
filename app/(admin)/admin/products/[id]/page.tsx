@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ProductForm } from "@/components/admin/product-form";
-import { requireAdmin } from "@/lib/dal";
+import { requirePermission } from "@/lib/dal";
 import { getProductById } from "@/db/repo";
 
 export const metadata: Metadata = { title: "Edit Produk" };
@@ -12,7 +12,7 @@ export default async function EditProductPage({
 }: {
   params: Promise<{ id: string }>;
 }) {
-  await requireAdmin();
+  await requirePermission("products:write");
   const { id } = await params;
   const product = await getProductById(id);
   if (!product) notFound();

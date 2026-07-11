@@ -23,7 +23,7 @@ export default function StorefrontLayout({
               alt="Koka Scent"
               width={221}
               height={128}
-              className="h-9 w-auto"
+              className="h-9 w-auto dark:invert"
               priority
             />
           </Link>

@@ -1,6 +1,7 @@
 import { AdminNav } from "@/components/admin/admin-nav";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { verifySession } from "@/lib/dal";
+import { normalizeRole, ROLE_LABEL } from "@/lib/rbac";
 import { signOut } from "@/auth";
 
 /**
@@ -24,9 +25,14 @@ export default async function AdminLayout({
         </div>
         <AdminNav />
         <div className="mt-auto border-t border-sidebar-border px-4 py-3 text-xs">
-          <p className="font-medium text-sidebar-foreground">
-            {user?.name ?? "Admin"}
-          </p>
+          <div className="flex items-center gap-2">
+            <p className="font-medium text-sidebar-foreground">
+              {user?.name ?? "Admin"}
+            </p>
+            <span className="rounded-full bg-sidebar-accent px-2 py-0.5 text-[0.65rem] font-medium text-sidebar-accent-foreground">
+              {ROLE_LABEL[normalizeRole(user?.role)]}
+            </span>
+          </div>
           {user?.email && (
             <p className="text-sidebar-foreground/70">{user.email}</p>
           )}

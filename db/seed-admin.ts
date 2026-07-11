@@ -12,11 +12,14 @@ async function main() {
     .trim();
   const password = process.env.ADMIN_PASSWORD ?? "admin12345";
   const name = process.env.ADMIN_NAME ?? "Admin Koka";
+  // "admin" (full) or "staff" (no product writes). Create a staff account with:
+  //   ADMIN_EMAIL=staf@kokascent.com ADMIN_ROLE=staff npm run db:seed-admin
+  const role = process.env.ADMIN_ROLE === "staff" ? "staff" : "admin";
 
   const passwordHash = await hashPassword(password);
-  await createAdminUser({ email, name, passwordHash });
+  await createAdminUser({ email, name, passwordHash, role });
 
-  console.log(`[db:seed-admin] admin account ready: ${email}`);
+  console.log(`[db:seed-admin] ${role} account ready: ${email}`);
   process.exit(0);
 }
 

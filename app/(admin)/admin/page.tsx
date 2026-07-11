@@ -13,12 +13,14 @@ import {
 import { formatIDR } from "@/lib/format";
 import { CATEGORY_LABEL } from "@/lib/order-status";
 import { requireAdmin } from "@/lib/dal";
+import { can } from "@/lib/rbac";
 import { getDashboardSummary } from "@/db/repo";
 
 export const metadata: Metadata = { title: "Dashboard" };
 
 export default async function AdminDashboardPage() {
-  await requireAdmin();
+  const user = await requireAdmin();
+  const canWrite = can(user.role, "products:write");
   const { ordersToday, ordersThisWeek, revenueThisWeek, lowStock } =
     await getDashboardSummary();
 
@@ -56,7 +58,9 @@ export default async function AdminDashboardPage() {
                   <TableHead>Kategori</TableHead>
                   <TableHead className="text-right">Harga</TableHead>
                   <TableHead className="text-right">Stok</TableHead>
-                  <TableHead className="text-right">Aksi</TableHead>
+                  {canWrite && (
+                    <TableHead className="text-right">Aksi</TableHead>
+                  )}
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -74,11 +78,13 @@ export default async function AdminDashboardPage() {
                     <TableCell className="text-right font-medium text-destructive">
                       {p.stock}
                     </TableCell>
-                    <TableCell className="text-right">
-                      <Button asChild size="sm" variant="outline">
-                        <Link href={`/admin/products/${p.id}`}>Edit</Link>
-                      </Button>
-                    </TableCell>
+                    {canWrite && (
+                      <TableCell className="text-right">
+                        <Button asChild size="sm" variant="outline">
+                          <Link href={`/admin/products/${p.id}`}>Edit</Link>
+                        </Button>
+                      </TableCell>
+                    )}
                   </TableRow>
                 ))}
               </TableBody>

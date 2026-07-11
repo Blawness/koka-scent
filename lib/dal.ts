@@ -6,6 +6,7 @@
 import { cache } from "react";
 import { redirect } from "next/navigation";
 import { auth } from "@/auth";
+import { can, type Permission } from "@/lib/rbac";
 
 /** The signed-in admin for this render pass, or null. Cached per request. */
 export const verifySession = cache(async () => {
@@ -17,5 +18,17 @@ export const verifySession = cache(async () => {
 export async function requireAdmin() {
   const user = await verifySession();
   if (!user) redirect("/admin/login");
+  return user;
+}
+
+/**
+ * Page-level authorization gate. Requires a session AND the given permission;
+ * a signed-in user whose role lacks it is bounced to the dashboard. Use in page
+ * loaders. For Server Actions prefer returning an error (see `can`) so the UI
+ * can toast, rather than throwing a redirect mid-transition.
+ */
+export async function requirePermission(permission: Permission) {
+  const user = await requireAdmin();
+  if (!can(user.role, permission)) redirect("/admin");
   return user;
 }

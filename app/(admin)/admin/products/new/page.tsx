@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ProductForm } from "@/components/admin/product-form";
-import { requireAdmin } from "@/lib/dal";
+import { requirePermission } from "@/lib/dal";
 
 export const metadata: Metadata = { title: "Tambah Produk" };
 
 export default async function NewProductPage() {
-  await requireAdmin();
+  await requirePermission("products:write");
   return (
     <section className="space-y-6">
       <div className="space-y-1">
