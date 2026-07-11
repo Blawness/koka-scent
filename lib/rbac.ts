@@ -8,15 +8,23 @@ export type Permission =
   | "products:read"
   | "products:write"
   | "orders:read"
-  | "orders:write";
+  | "orders:write"
+  | "users:manage";
 
 /**
- * admin — full control, including the catalog (pricing, stock, activation).
+ * admin — full control: catalog (pricing, stock, activation) and user/role
+ *         management.
  * staff — day-to-day fulfilment: sees everything, manages order status, but
- *         cannot create/edit/deactivate products.
+ *         cannot edit the catalog or manage users.
  */
 const ROLE_PERMISSIONS: Record<Role, readonly Permission[]> = {
-  admin: ["products:read", "products:write", "orders:read", "orders:write"],
+  admin: [
+    "products:read",
+    "products:write",
+    "orders:read",
+    "orders:write",
+    "users:manage",
+  ],
   staff: ["products:read", "orders:read", "orders:write"],
 };
 

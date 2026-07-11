@@ -7,7 +7,7 @@
 // a module-level in-memory array — good enough for the zero-setup demo path,
 // reset on every server restart.
 
-import { and, desc, eq, gte, inArray, lt, sql } from "drizzle-orm";
+import { and, count, desc, eq, gte, inArray, lt, ne, sql } from "drizzle-orm";
 import { randomBytes, randomUUID } from "node:crypto";
 import { canTransition } from "@/lib/order-status";
 import { priceLineItems, type LineItemInput } from "@/lib/order-pricing";
@@ -161,6 +161,55 @@ export async function createAdminUser(input: {
       target: adminUsers.email,
       set: { passwordHash: input.passwordHash, name: input.name },
     });
+}
+
+export type AdminUserRow = {
+  id: string;
+  email: string;
+  name: string;
+  role: string;
+  createdAt: Date;
+};
+
+/** All admin accounts, newest first. For the user-management screen. */
+export async function listAdminUsers(): Promise<AdminUserRow[]> {
+  const database = requireDb();
+  return database.query.adminUsers.findMany({
+    columns: { id: true, email: true, name: true, role: true, createdAt: true },
+    orderBy: [desc(adminUsers.createdAt)],
+  });
+}
+
+export async function getAdminById(id: string): Promise<AdminUserRow | null> {
+  const database = requireDb();
+  const row = await database.query.adminUsers.findFirst({
+    where: eq(adminUsers.id, id),
+    columns: { id: true, email: true, name: true, role: true, createdAt: true },
+  });
+  return row ?? null;
+}
+
+/**
+ * Count accounts that still hold full access. Anything not explicitly "staff"
+ * resolves to admin (matches normalizeRole), so guard against `role <> 'staff'`.
+ */
+export async function countActiveAdmins(): Promise<number> {
+  const database = requireDb();
+  const [row] = await database
+    .select({ n: count() })
+    .from(adminUsers)
+    .where(ne(adminUsers.role, "staff"));
+  return row?.n ?? 0;
+}
+
+export async function updateAdminRole(id: string, role: string): Promise<void> {
+  const database = requireDb();
+  await database.update(adminUsers).set({ role }).where(eq(adminUsers.id, id));
+}
+
+export async function deleteAdminUser(id: string): Promise<void> {
+  const database = requireDb();
+  await database.delete(adminUsers).where(eq(adminUsers.id, id));
 }
 
 // ---------------------------------------------------------------------------

@@ -23,7 +23,7 @@ export default async function AdminLayout({
           <span className="font-heading text-lg">Koka Admin</span>
           <ThemeToggle />
         </div>
-        <AdminNav />
+        <AdminNav role={user?.role} />
         <div className="mt-auto border-t border-sidebar-border px-4 py-3 text-xs">
           <div className="flex items-center gap-2">
             <p className="font-medium text-sidebar-foreground">

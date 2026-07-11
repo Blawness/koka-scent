@@ -2,22 +2,37 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { LayoutDashboard, Package, ShoppingBag } from "lucide-react";
+import { LayoutDashboard, Package, ShoppingBag, Users } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { can, type Permission } from "@/lib/rbac";
 
-const LINKS = [
+const LINKS: Array<{
+  href: string;
+  label: string;
+  icon: typeof LayoutDashboard;
+  exact: boolean;
+  requires?: Permission;
+}> = [
   { href: "/admin", label: "Dashboard", icon: LayoutDashboard, exact: true },
   { href: "/admin/products", label: "Produk", icon: Package, exact: false },
   { href: "/admin/orders", label: "Pesanan", icon: ShoppingBag, exact: false },
+  {
+    href: "/admin/users",
+    label: "Pengguna",
+    icon: Users,
+    exact: false,
+    requires: "users:manage",
+  },
 ];
 
-/** Sidebar navigation with active-link highlighting. */
-export function AdminNav() {
+/** Sidebar navigation with active-link highlighting; links gate by role. */
+export function AdminNav({ role }: { role?: string }) {
   const pathname = usePathname();
 
   return (
     <nav className="flex flex-col gap-1 px-2 text-sm">
-      {LINKS.map(({ href, label, icon: Icon, exact }) => {
+      {LINKS.filter((l) => !l.requires || can(role, l.requires)).map(
+        ({ href, label, icon: Icon, exact }) => {
         const active = exact ? pathname === href : pathname.startsWith(href);
         return (
           <Link
