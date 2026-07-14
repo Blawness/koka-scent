@@ -31,9 +31,9 @@ export const metadata: Metadata = {
     type: "website",
     locale: "id_ID",
     siteName: "Koka Scent",
-    title: "Koka Scent — Parfum Terinspirasi Jepang",
+    title: "Koka Scent - Made to Be Remembered.",
     description:
-      "Parfum oil-based terinspirasi Jepang, diracik dalam batch kecil. Notes autentik, tahan 8+ jam.",
+      "Long-lasting fragrances designed to leave a memorable impression wherever you go.",
     url: "/",
   },
 };
