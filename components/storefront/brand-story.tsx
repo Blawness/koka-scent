@@ -16,7 +16,7 @@ export function BrandStory() {
       <div className="relative order-2 lg:order-1">
         <div className="plinth shadow-soft relative aspect-[5/4] w-full overflow-hidden rounded-3xl">
           <Image
-            src="/products/brand-story.jpg"
+            src="/products/brand-story.webp"
             alt="Deretan botol parfum kaca dengan tutup kristal di bawah cahaya hangat"
             fill
             sizes="(max-width: 1024px) 90vw, 520px"

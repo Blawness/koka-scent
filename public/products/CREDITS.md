@@ -37,6 +37,6 @@ Lisensi Unsplash: https://unsplash.com/license (bebas dipakai, atribusi tidak wa
 | `diffuser-bambu-hutan.jpg` | photo-1607047411619-12ca1b2b72c4 |
 | `diffuser-melati-senja.jpg` | photo-1750433101188-8284e112d250 |
 | `diffuser-kayu-cendana.jpg` | photo-1750429431308-96eb0e8b6f6f |
-| `brand-story.jpg` | photo-1535683577427-740aaac4ec25 |
+| `brand-story.webp` | photo-1535683577427-740aaac4ec25 |
 
 `placeholder.svg` tetap ada sebagai fallback ketika `product.images` kosong.
