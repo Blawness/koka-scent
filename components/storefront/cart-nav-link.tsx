@@ -13,7 +13,7 @@ export function CartNavLink() {
 
   return (
     <Link href="/cart" className="hover:text-primary">
-      Keranjang{mounted && totalItems > 0 ? ` (${totalItems})` : ""}
+      Cart{mounted && totalItems > 0 ? ` (${totalItems})` : ""}
     </Link>
   );
 }

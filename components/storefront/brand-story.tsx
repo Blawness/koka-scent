@@ -23,8 +23,12 @@ export function BrandStory() {
             className="object-cover"
           />
         </div>
-        <span className="display-number pointer-events-none absolute -bottom-6 -left-3 text-7xl text-terracotta/70 sm:text-8xl">
-          Est
+        <span
+          aria-hidden
+          className="display-number pointer-events-none absolute -bottom-6 -left-3 text-7xl text-terracotta/70 sm:text-8xl"
+          style={{ fontFamily: '"Hiragino Sans", "Yu Gothic", "Noto Sans JP", sans-serif' }}
+        >
+          創
         </span>
       </div>
 
