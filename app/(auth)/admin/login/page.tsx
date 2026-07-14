@@ -29,7 +29,7 @@ export default function AdminLoginPage() {
               name="email"
               type="email"
               required
-              placeholder="admin@kokascent.com"
+              placeholder="Email"
               autoComplete="email"
             />
           </div>
