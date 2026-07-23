@@ -15,7 +15,7 @@ const PROPS = [
   },
   {
     title: "100% Authentic",
-    body: "Setiap botol bersegel. Tidak sesuai deskripsi, kami ganti. Every bottle is sealed and quality checked before it reaches you.",
+    body: "Every bottle is sealed and quality checked before it reaches you.",
   },
 ];
 
