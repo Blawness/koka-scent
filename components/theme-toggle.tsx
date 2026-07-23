@@ -7,9 +7,10 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
 /**
- * Light/dark switch. Follows the OS until the user picks one, then next-themes
- * persists the choice. Renders a fixed-markup placeholder until mounted so the
- * server/client HTML matches (the real theme is only known on the client).
+ * Light/dark switch. Defaults to light regardless of OS preference until the
+ * user picks one, then next-themes persists the choice. Renders a
+ * fixed-markup placeholder until mounted so the server/client HTML matches
+ * (the real theme is only known on the client).
  */
 export function ThemeToggle({ className }: { className?: string }) {
   const { resolvedTheme, setTheme } = useTheme();

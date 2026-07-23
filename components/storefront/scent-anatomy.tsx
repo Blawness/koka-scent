@@ -18,7 +18,7 @@ const LAYERS = [
     index: "03",
     label: "The Lasting Signature",
     duration: "Base Notes · 4+ Hours",
-    body: "Fondasi yang membekas di pakaian sampai esok hari. Aroma kayu dan resin yang dalam — cendana, vanila, musk.",
+    body: "The final layer that stays closest to you. Warm woods, creamy vanilla, and soft musk leave a memorable trail long after the first spray.",
   },
 ];
 

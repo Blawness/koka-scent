@@ -9,7 +9,6 @@ const STATS = [
   { value: "2019", label: "Tahun kami mulai" },
 ];
 
-// TODO(copy): placeholder brand narrative — ganti dengan cerita asli sebelum live.
 export function BrandStory() {
   return (
     <section className="grid items-center gap-10 lg:grid-cols-2">
@@ -28,7 +27,7 @@ export function BrandStory() {
           className="display-number pointer-events-none absolute -bottom-6 -left-3 text-7xl text-terracotta/70 sm:text-8xl"
           style={{ fontFamily: '"Hiragino Sans", "Yu Gothic", "Noto Sans JP", sans-serif' }}
         >
-          創
+          ころ
         </span>
       </div>
 
@@ -36,18 +35,19 @@ export function BrandStory() {
         <SectionHeading eyebrow="Tentang Kami" title="Cerita Koka Scent" />
         <div className="space-y-4 text-base text-muted-foreground">
           <p>
-            Koka Scent lahir dari satu kebiasaan sederhana: berhenti sejenak,
-            menarik napas, dan membiarkan aroma menandai satu momen agar ia tidak
-            hilang begitu saja.
+            KOKA is short for 「こころから」— kokoro kara. In Japanese, kokoro
+            means heart, mind, spirit; kara means from. Put together, it
+            translates simply as &ldquo;from heart.&rdquo;
           </p>
           <p>
-            Kami mengambil disiplin peracikan Jepang — sabar, presisi, tidak
-            berlebihan — lalu menerjemahkannya lewat bahan yang tumbuh di sekitar
-            kami. Sakura bertemu cendana. Yuzu bertemu melati.
+            That&apos;s the whole idea behind the name. Every scent we make
+            starts there — not as a tagline, but as the honest answer to why
+            we do this: we put our heart into it.
           </p>
           <p>
-            Setiap botol diracik dalam batch kecil, diuji berminggu-minggu di
-            kulit sungguhan, dan baru dirilis ketika aromanya terasa jujur.
+            So when you wear KOKA, you&apos;re not just wearing a fragrance.
+            You&apos;re wearing something someone genuinely cared about
+            getting right — from heart, meant to be felt.
           </p>
         </div>
 
@@ -68,7 +68,7 @@ export function BrandStory() {
         </dl>
 
         <Button asChild size="lg" variant="outline" className="rounded-full">
-          <Link href="/products">Jelajahi Koleksi</Link>
+          <Link href="/products">Find Your Scent</Link>
         </Button>
       </div>
     </section>

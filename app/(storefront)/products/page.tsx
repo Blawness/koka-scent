@@ -41,9 +41,8 @@ function ProductsPageContent() {
   return (
     <section className="space-y-6">
       <SectionHeading
-        eyebrow="Koleksi"
-        title="Semua Produk"
-        index="No 07"
+        eyebrow="Catalog"
+        title="All Products"
         titleAs="h1"
       />
 

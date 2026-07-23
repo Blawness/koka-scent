@@ -6,9 +6,8 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { Skeleton } from "@/components/ui/skeleton";
 import { formatIDR } from "@/lib/format";
+import { whatsappLink } from "@/lib/social";
 import type { OrderWithItems } from "@/types";
-
-const WHATSAPP_NUMBER = "6281234567890"; // placeholder demo number
 
 const STATUS_LABELS: Record<OrderWithItems["status"], string> = {
   pending: "Menunggu Konfirmasi",
@@ -79,9 +78,6 @@ export function OrderConfirmation({
   }
 
   const totalUnits = order.items.reduce((sum, item) => sum + item.quantity, 0);
-  const waMessage = encodeURIComponent(
-    `Halo Koka Scent, saya ingin menanyakan pesanan ${order.orderNumber}.`,
-  );
 
   return (
     <div className="space-y-6">
@@ -162,7 +158,9 @@ export function OrderConfirmation({
 
       <Button asChild size="lg" className="w-full rounded-full">
         <a
-          href={`https://wa.me/${WHATSAPP_NUMBER}?text=${waMessage}`}
+          href={whatsappLink(
+            `Halo Koka Scent, saya ingin menanyakan pesanan ${order.orderNumber}.`,
+          )}
           target="_blank"
           rel="noopener noreferrer"
         >

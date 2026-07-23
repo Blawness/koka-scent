@@ -4,6 +4,12 @@ import { Button } from "@/components/ui/button";
 import { CartNavLink } from "@/components/storefront/cart-nav-link";
 import { FloatingCart } from "@/components/storefront/floating-cart";
 import { ThemeToggle } from "@/components/theme-toggle";
+import {
+  INSTAGRAM_URL,
+  SHOPEE_URL,
+  TOKOPEDIA_URL,
+  WHATSAPP_URL,
+} from "@/lib/social";
 
 /**
  * Storefront shell (public) — Editorial Warm v2. Pill nav header + pill footer
@@ -55,6 +61,28 @@ export default function StorefrontLayout({
             </Button>
             <Button asChild variant="outline" size="sm" className="rounded-full">
               <Link href="/">About</Link>
+            </Button>
+          </div>
+          <div className="flex flex-wrap gap-2">
+            <Button asChild variant="ghost" size="sm" className="rounded-full">
+              <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer">
+                WhatsApp
+              </a>
+            </Button>
+            <Button asChild variant="ghost" size="sm" className="rounded-full">
+              <a href={INSTAGRAM_URL} target="_blank" rel="noopener noreferrer">
+                Instagram
+              </a>
+            </Button>
+            <Button asChild variant="ghost" size="sm" className="rounded-full">
+              <a href={SHOPEE_URL} target="_blank" rel="noopener noreferrer">
+                Shopee
+              </a>
+            </Button>
+            <Button asChild variant="ghost" size="sm" className="rounded-full">
+              <a href={TOKOPEDIA_URL} target="_blank" rel="noopener noreferrer">
+                Tokopedia
+              </a>
             </Button>
           </div>
           <p className="text-sm text-muted-foreground">

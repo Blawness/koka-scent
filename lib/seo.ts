@@ -1,4 +1,5 @@
 import { highestPrice, lowestPrice, variantPrices } from "@/lib/price";
+import { INSTAGRAM_URL, SHOPEE_URL, TOKOPEDIA_URL } from "@/lib/social";
 import type { ProductWithVariants } from "@/types";
 
 /**
@@ -24,6 +25,7 @@ export function organizationJsonLd() {
     url: SITE_URL,
     description:
       "Koka Scent — parfum dan diffuser terinspirasi Jepang, diracik dan dikirim dari Indonesia.",
+    sameAs: [INSTAGRAM_URL, SHOPEE_URL, TOKOPEDIA_URL],
   };
 }
 

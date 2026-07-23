@@ -1,5 +1,7 @@
 import Link from "next/link";
+import { MessageCircleIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { whatsappLink } from "@/lib/social";
 
 export function ClosingCta() {
   return (
@@ -15,8 +17,8 @@ export function ClosingCta() {
           Temukan wangi yang terasa seperti dirimu.
         </h2>
         <p className="text-sm opacity-90 sm:text-base">
-          Dua belas aroma, diracik dalam batch kecil. Bingung memilih? Tim kami
-          bantu carikan yang paling cocok.
+          Not sure where to start? Our team is happy to help you find the
+          scent that feels like you.
         </p>
         <div className="flex flex-wrap justify-center gap-3">
           <Button asChild size="lg" variant="secondary" className="rounded-full">
@@ -28,7 +30,16 @@ export function ClosingCta() {
             variant="outline"
             className="rounded-full border-primary-foreground/40 bg-transparent text-primary-foreground hover:bg-primary-foreground/10 hover:text-primary-foreground"
           >
-            <Link href="/products">Lihat Semua Aroma</Link>
+            <a
+              href={whatsappLink(
+                "Halo Koka Scent, saya butuh bantuan memilih aroma yang cocok.",
+              )}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <MessageCircleIcon data-icon="inline-start" />
+              Tanya Tim Kami
+            </a>
           </Button>
         </div>
       </div>

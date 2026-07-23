@@ -151,11 +151,11 @@ Muncul di semua halaman.
 | ANAT-02-B | Lapisan 2 · Isi | Where the fragrance finds its true identity. Soft florals and delicate accords bloom gracefully, creating the signature character of every KOKA scent. | |
 | ANAT-03-J | Lapisan 3 · Nama | The Lasting Signature | |
 | ANAT-03-D | Lapisan 3 · Durasi | Base Notes · 4+ Hours | |
-| ANAT-03-B | Lapisan 3 · Isi | Fondasi yang membekas di pakaian sampai esok hari. Aroma kayu dan resin yang dalam — cendana, vanila, musk. | |
+| ANAT-03-B | Lapisan 3 · Isi (EN, revisi 2026-07-23) | The final layer that stays closest to you. Warm woods, creamy vanilla, and soft musk leave a memorable trail long after the first spray. | |
 
 > Section ini sengaja ditulis untuk menjaring pencarian Google seputar "berapa lama parfum bertahan" dan "apa itu base notes". Revisi terbaru mengganti istilah lapisan dari Top/Middle/Base Notes menjadi Heart Notes untuk lapisan tengah — pertahankan istilah *top notes*, *heart notes* (dulu *middle notes*), *base notes*, dan *eau de parfum* secara utuh, itu kata kunci yang dicari orang.
 >
-> ⚠ **ANAT-03-B** (isi lapisan 3, belum direvisi klien) masih menyatakan base notes "membekas di pakaian sampai esok hari", sementara durasi barunya (**ANAT-03-D**) sudah eksplisit "4+ Hours". Kalimat isi ini juga belum diselaraskan dengan **ANAT-02-B** yang baru (tidak lagi mengklaim middle/heart notes "bertahan paling lama di kulit"). Mohon dikonfirmasi apakah ANAT-03-B ikut direvisi.
+> **Resolved 2026-07-23:** ANAT-03-B direvisi klien ke Bahasa Inggris, sekarang selaras dengan section ini yang sudah full Inggris. Klaim "membekas sampai esok hari" dihapus, tidak lagi bertentangan dengan durasi "4+ Hours".
 
 ## 6. Produk Pilihan
 
@@ -176,20 +176,20 @@ Muncul di semua halaman.
 |----|--------|---------------|--------|
 | CERITA-00-E | Eyebrow | Tentang Kami | |
 | CERITA-00-J | Judul section | Cerita Koka Scent | |
-| CERITA-01 | ⚠ Paragraf 1 | Koka Scent lahir dari satu kebiasaan sederhana: berhenti sejenak, menarik napas, dan membiarkan aroma menandai satu momen agar ia tidak hilang begitu saja. | |
-| CERITA-02 | ⚠ Paragraf 2 | Kami mengambil disiplin peracikan Jepang — sabar, presisi, tidak berlebihan — lalu menerjemahkannya lewat bahan yang tumbuh di sekitar kami. Sakura bertemu cendana. Yuzu bertemu melati. | |
-| CERITA-03 | ⚠ Paragraf 3 | Setiap botol diracik dalam batch kecil, diuji berminggu-minggu di kulit sungguhan, dan baru dirilis ketika aromanya terasa jujur. | |
-| CERITA-04-A | ⚠ Statistik 1 · Angka | 12 | |
+| CERITA-01 | Paragraf 1 (EN, revisi 2026-07-23) | KOKA is short for 「こころから」— kokoro kara. In Japanese, kokoro means heart, mind, spirit; kara means from. Put together, it translates simply as "from heart." | |
+| CERITA-02 | Paragraf 2 (EN, revisi 2026-07-23) | That's the whole idea behind the name. Every scent we make starts there — not as a tagline, but as the honest answer to why we do this: we put our heart into it. | |
+| CERITA-03 | Paragraf 3 (EN, revisi 2026-07-23) | So when you wear KOKA, you're not just wearing a fragrance. You're wearing something someone genuinely cared about getting right — from heart, meant to be felt. | |
+| CERITA-04-A | ⚠ Statistik 1 · Angka | 8 (kode) / 12 (dek lama) | |
 | CERITA-04-L | Statistik 1 · Label | Aroma dalam koleksi | |
 | CERITA-05-A | ⚠ Statistik 2 · Angka | 8 jam | |
 | CERITA-05-L | Statistik 2 · Label | Ketahanan rata-rata | |
 | CERITA-06-A | ⚠ Statistik 3 · Angka | 2019 | |
 | CERITA-06-L | Statistik 3 · Label | Tahun kami mulai | |
-| CERITA-07 | Tombol | Jelajahi Koleksi | |
+| CERITA-07 | Tombol (EN, revisi 2026-07-23) | Find Your Scent | |
 
-> **Seluruh narasi di section ini adalah teks sementara yang kami tulis sebagai contoh, bukan cerita asli Koka Scent.** Mohon ditulis ulang sepenuhnya. Lihat [Catatan Serah Terima](#catatan-serah-terima).
+> **Resolved 2026-07-23:** client supplied the real name-origin story (KOKA = kokoro kara, "from heart," from their Instagram) and CERITA-01–03 now carry it, in English. CERITA-00-E/00-J (eyebrow/title) were left in Indonesian — only the 3 paragraphs were in scope for this revision, so the section is now mixed-language pending a decision. See [Catatan Serah Terima](#catatan-serah-terima).
 >
-> Ketiga angka statistik ditulis manual, tidak dihitung dari database. Angka "12 aroma" tidak akan berubah sendiri kalau jumlah produk bertambah.
+> ⚠ CERITA-04-A drifted: the deck said "12" but the live code already reads "8" — was updated outside this deck's revision flow at some point. Statistics are still hand-written, not computed from the database.
 
 ## 8. Cerita Pelanggan
 
@@ -246,14 +246,12 @@ Muncul di semua halaman.
 |----|--------|---------------|--------|
 | CTA-01 | Eyebrow | Mulai Dari Sini | |
 | CTA-02 | Headline | Temukan wangi yang terasa seperti dirimu. | |
-| CTA-03 | ⚠ Paragraf | Dua belas aroma, diracik dalam batch kecil. Bingung memilih? Tim kami bantu carikan yang paling cocok. | |
+| CTA-03 | Paragraf (EN, revisi 2026-07-23) | Not sure where to start? Our team is happy to help you find the scent that feels like you. | |
 | CTA-04 | Tombol utama | Belanja Sekarang | |
-| CTA-05 | ⚠ Tombol kedua | Lihat Semua Aroma | |
+| CTA-05 | Tombol kedua (revisi) | Tanya Tim Kami → link WhatsApp | |
 | CTA-06 | Teks dekoratif latar | Koka | |
 
-> ⚠ **CTA-03** menyebut "dua belas aroma" dan **CERITA-04-A** menyebut angka "12". Keduanya ditulis manual di tempat berbeda — kalau jumlahnya berubah, dua-duanya harus ikut diperbarui.
->
-> ⚠ **CTA-03** menjanjikan "Tim kami bantu carikan yang paling cocok", tetapi website belum punya kontak WhatsApp, live chat, maupun formulir. Pengunjung yang tertarik tidak punya cara menghubungi siapa pun. Mohon tentukan kanal kontaknya.
+> **Resolved 2026-07-23:** CTA-03 tidak lagi menyebut angka aroma manual ("dua belas") — dihapus bersama klaim "batch kecil" yang juga tidak terverifikasi. CTA-05 sudah diarahkan ke WhatsApp asli (lihat [[social-marketplace-links-live]] di memory), jadi janji "Tim kami bantu carikan" sekarang punya kanal kontak sungguhan. CTA-01/02/04 masih Indonesia, CTA-03 sekarang Inggris — section ini mixed-language, belum diminta diseragamkan.
 
 ## Kondisi Khusus
 
@@ -269,14 +267,13 @@ Muncul di semua halaman.
 
 | ID | Elemen | Teks Sekarang | Revisi |
 |----|--------|---------------|--------|
-| KAT-H-01 | Eyebrow | Koleksi | |
-| KAT-H-02 | Judul halaman | Semua Produk | |
-| KAT-H-03 | Angka dekoratif | No 07 | |
+| KAT-H-01 | Eyebrow (revisi 2026-07-23) | Catalog | |
+| KAT-H-02 | Judul halaman (revisi 2026-07-23) | All Products | |
 | KAT-H-04 | Filter "semua kategori" | Semua | |
 | KAT-H-05 | Label stok kosong pada kartu produk | Stok Habis | |
 | KAT-H-06 | Pesan kalau produk gagal dimuat | Gagal memuat produk. Silakan muat ulang halaman. | |
 
-> ⚠ **KAT-H-03** tertulis "No 07" tanpa alasan yang jelas — ini bukan nomor halaman maupun jumlah produk. Kemungkinan sisa dari desain awal. Mohon dikonfirmasi apakah mau dihapus.
+> **Resolved 2026-07-23:** KAT-H-03 ("No 07", angka dekoratif tanpa makna) dihapus — klien konfirmasi buang. KAT-H-01 diganti ke "Catalog" (konsisten dengan nav "Catalog"), KAT-H-02 ke "All Products". Section ini sekarang full Inggris; KAT-H-04–06 (filter, label stok, error) masih Indonesia, belum diminta klien.
 
 ---
 
@@ -390,15 +387,17 @@ Kalau teks ini hanya dipoles lalu website ditayangkan, Koka Scent menerbitkan te
 
 Sebagai catatan teknis, kami sengaja **tidak** memasang penanda ulasan (`Review` / `AggregateRating`) untuk Google pada section ini. Google melarang data terstruktur untuk ulasan yang bukan dari pelanggan sungguhan, dan pelanggarannya berisiko sanksi manual pada seluruh domain. Penanda itu baru akan kami pasang setelah testimoni diganti dengan yang asli.
 
-## 2. Cerita brand adalah teks contoh
+## 2. Cerita brand — resolved 2026-07-23
 
-Ketiga paragraf di section Cerita Koka Scent (CERITA-01 sampai CERITA-03) kami tulis sebagai pengisi agar tata letaknya bisa dinilai. Narasi tentang "disiplin peracikan Jepang" dan "batch kecil" bukan berasal dari Koka Scent. Mohon ditulis ulang sepenuhnya.
+~~Ketiga paragraf di section Cerita Koka Scent (CERITA-01 sampai CERITA-03) kami tulis sebagai pengisi agar tata letaknya bisa dinilai. Narasi tentang "disiplin peracikan Jepang" dan "batch kecil" bukan berasal dari Koka Scent. Mohon ditulis ulang sepenuhnya.~~
+
+Diganti dengan cerita asli nama KOKA (kokoro kara / "from heart") dari client, ditulis dalam Bahasa Inggris. Eyebrow dan judul section (CERITA-00-E/00-J) belum diterjemahkan — masih Bahasa Indonesia — jadi section ini sekarang mixed-language. Perlu keputusan: sesuaikan eyebrow/judul ke Inggris, atau biarkan.
 
 ## 3. Tiga angka statistik belum terverifikasi
 
-CERITA-04-A hingga CERITA-06-A menampilkan **12 aroma dalam koleksi**, **8 jam ketahanan rata-rata**, dan **2019 sebagai tahun mulai**. Ketiganya kami tulis manual, tidak dihitung dari data mana pun. Angka-angka ini akan terbaca publik sebagai klaim resmi. Mohon dikonfirmasi satu per satu.
+CERITA-04-A hingga CERITA-06-A menampilkan **8 aroma dalam koleksi**, **8 jam ketahanan rata-rata**, dan **2019 sebagai tahun mulai**. Ketiganya kami tulis manual, tidak dihitung dari data mana pun. Angka-angka ini akan terbaca publik sebagai klaim resmi. Mohon dikonfirmasi satu per satu.
 
-Perhatikan juga bahwa "12" muncul dua kali di tempat berbeda — sekali sebagai angka di CERITA-04-A, sekali sebagai kata "dua belas" di CTA-03.
+~~Perhatikan juga bahwa "12" muncul dua kali di tempat berbeda — sekali sebagai angka di CERITA-04-A, sekali sebagai kata "dua belas" di CTA-03.~~ — resolved 2026-07-23: CTA-03 direvisi, tidak lagi menyebut jumlah aroma. CERITA-04-A juga sudah "8" di kode (bukan "12" seperti dek lama), tapi tetap angka manual yang belum dikonfirmasi.
 
 ## 4. FAQ memuat janji operasional yang mengikat
 
@@ -424,12 +423,12 @@ Selain itu, ANAT-02-B menyebut *middle notes* bertahan paling lama di kulit, sem
 | ID | Teks | Masalah |
 |----|------|---------|
 | HERO-04 & HERO-05 | Belanja Sekarang / Lihat Koleksi | Dua tombol bersebelahan, keduanya menuju halaman katalog yang sama |
-| CTA-04 & CTA-05 | Belanja Sekarang / Lihat Semua Aroma | Sama — dua tombol, satu tujuan |
 | FOOT-01 & FOOT-02 | Katalog / Koleksi | Dua tautan footer, keduanya menuju katalog |
 | FOOT-03 | Tentang | Menuju halaman utama, karena halaman "Tentang" belum dibuat |
-| CTA-03 | "Tim kami bantu carikan yang paling cocok" | Belum ada kanal kontak — tidak ada WhatsApp, live chat, maupun formulir |
 
-Mohon ditentukan: tombol kedua dihapus, atau diarahkan ke tujuan lain. Untuk CTA-03, perlu diputuskan kanal kontak apa yang dipakai, atau kalimatnya diubah agar tidak menjanjikan bantuan yang belum tersedia.
+~~CTA-04 & CTA-05 (dua tombol, satu tujuan) / CTA-03 (janji bantuan tanpa kanal kontak)~~ — resolved: CTA-05 sekarang ke WhatsApp asli, bukan duplikat CTA-04.
+
+Mohon ditentukan: HERO-04/05 dan FOOT-01/02 duplikat tujuan — tombol kedua dihapus, atau diarahkan ke tujuan lain.
 
 ---
 
