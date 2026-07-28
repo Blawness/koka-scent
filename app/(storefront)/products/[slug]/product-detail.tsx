@@ -3,7 +3,7 @@
 import { useMemo, useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
-import { CATEGORY_LABELS } from "@/components/storefront/product-card";
+import { CATEGORY_LABEL } from "@/lib/order-status";
 import { ProductGallery } from "@/components/storefront/product-gallery";
 import { SectionHeading } from "@/components/storefront/section-heading";
 import { VariantSelector } from "@/components/storefront/variant-selector";
@@ -47,7 +47,7 @@ export function ProductDetail({ product }: { product: ProductWithVariants }) {
             No
           </span>
           <SectionHeading
-            eyebrow={CATEGORY_LABELS[product.category]}
+            eyebrow={CATEGORY_LABEL[product.category]}
             title={product.name}
             titleAs="h1"
           />

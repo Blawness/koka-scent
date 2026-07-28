@@ -5,6 +5,7 @@
 // Dates are relative to now so the dashboard's "today"/"this week" tiles show
 // meaningful counts whenever the script is run.
 
+import { randomBytes } from "node:crypto";
 import { inArray, like } from "drizzle-orm";
 import { db } from "./client";
 import { orderItems, orders, products } from "./schema";
@@ -40,7 +41,7 @@ const DEMO: DemoOrder[] = [
     shippingCost: 20000,
     status: "pending",
     createdAt: daysAgo(0, 1),
-    items: [{ slug: "sakura-senja", quantity: 1 }],
+    items: [{ slug: "dakishimete", quantity: 1 }],
   },
   {
     customerName: "Siti Rahma",
@@ -52,8 +53,8 @@ const DEMO: DemoOrder[] = [
     status: "paid",
     createdAt: daysAgo(0, 3),
     items: [
-      { slug: "yuzu-embun", quantity: 2 },
-      { slug: "diffuser-bambu-hutan", quantity: 1 },
+      { slug: "mamoritai", quantity: 2 },
+      { slug: "hanami", quantity: 1 },
     ],
   },
   {
@@ -66,8 +67,8 @@ const DEMO: DemoOrder[] = [
     status: "processing",
     createdAt: daysAgo(1),
     items: [
-      { slug: "kayu-manis-malam", quantity: 1 },
-      { slug: "cendana-senja", quantity: 1 },
+      { slug: "shinjitsu", quantity: 1 },
+      { slug: "okaeri", quantity: 1 },
     ],
   },
   {
@@ -79,7 +80,7 @@ const DEMO: DemoOrder[] = [
     shippingCost: 20000,
     status: "shipped",
     createdAt: daysAgo(2),
-    items: [{ slug: "melati-tengah-malam", quantity: 1 }],
+    items: [{ slug: "okinawa", quantity: 1 }],
   },
   {
     customerName: "Rizky Hidayat",
@@ -90,7 +91,7 @@ const DEMO: DemoOrder[] = [
     shippingCost: 30000,
     status: "completed",
     createdAt: daysAgo(8),
-    items: [{ slug: "sakura-senja", quantity: 3 }],
+    items: [{ slug: "dakishimete", quantity: 3 }],
   },
   {
     customerName: "Fajar Nugroho",
@@ -101,7 +102,7 @@ const DEMO: DemoOrder[] = [
     shippingCost: 18000,
     status: "cancelled",
     createdAt: daysAgo(9),
-    items: [{ slug: "yuzu-embun", quantity: 1 }],
+    items: [{ slug: "hikari-tea", quantity: 1 }],
   },
 ];
 
@@ -145,6 +146,7 @@ async function main() {
     const d = String(o.createdAt.getUTCDate()).padStart(2, "0");
     const orderNumber = `KS-${y}${m}${d}-${String(++seq).padStart(4, "0")}`;
 
+    const accessToken = randomBytes(24).toString("hex");
     const [row] = await db
       .insert(orders)
       .values({
@@ -159,6 +161,7 @@ async function main() {
         subtotal,
         total: subtotal + o.shippingCost,
         status: o.status,
+        accessToken,
         createdAt: o.createdAt,
         updatedAt: o.createdAt,
       })

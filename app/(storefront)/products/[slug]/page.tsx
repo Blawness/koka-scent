@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getProductBySlug } from "@/db/repo";
 import { JsonLd } from "@/components/json-ld";
-import { CATEGORY_LABELS } from "@/components/storefront/product-card";
+import { CATEGORY_LABEL } from "@/lib/order-status";
 import { breadcrumbJsonLd, productJsonLd } from "@/lib/seo";
 import { lowestPrice } from "@/lib/price";
 import { formatIDR } from "@/lib/format";
@@ -63,7 +63,7 @@ export default async function ProductDetailPage({
           { name: "Beranda", path: "/" },
           { name: "Katalog", path: "/products" },
           {
-            name: CATEGORY_LABELS[product.category],
+            name: CATEGORY_LABEL[product.category],
             path: `/products?category=${product.category}`,
           },
           { name: product.name, path: `/products/${product.slug}` },

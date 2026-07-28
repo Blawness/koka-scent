@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import type { ProductCategory } from "@/types";
-import { CATEGORY_LABELS } from "@/components/storefront/product-card";
+import { CATEGORY_LABEL } from "@/lib/order-status";
 
 export type CategoryOption = ProductCategory | "all";
 
@@ -27,7 +27,7 @@ export function CategoryFilter({
           className={cn("rounded-full", value === option && "shadow-sm")}
           onClick={() => onChange(option)}
         >
-          {option === "all" ? "Semua" : CATEGORY_LABELS[option]}
+          {option === "all" ? "Semua" : CATEGORY_LABEL[option]}
         </Button>
       ))}
     </div>

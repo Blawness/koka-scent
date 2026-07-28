@@ -3,12 +3,12 @@ import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { formatIDR } from "@/lib/format";
+import { CATEGORY_LABEL } from "@/lib/order-status";
 import { highestPrice, lowestPrice } from "@/lib/price";
 import type { ProductWithVariants } from "@/types";
 
-export const CATEGORY_LABELS: Record<ProductWithVariants["category"], string> = {
-  oil_based_perfume: "Oil Based Perfume",
-};
+/** @deprecated Use `CATEGORY_LABEL` from `@/lib/order-status` instead. */
+export const CATEGORY_LABELS = CATEGORY_LABEL;
 
 function priceRange(product: ProductWithVariants) {
   const min = lowestPrice(product);
@@ -46,7 +46,7 @@ export function ProductCard({ product }: { product: ProductWithVariants }) {
         </div>
         <CardContent className="space-y-1 px-4 py-4">
           <span className="text-xs tracking-[0.15em] text-muted-foreground uppercase">
-            {CATEGORY_LABELS[product.category]}
+            {CATEGORY_LABEL[product.category]}
           </span>
           <h3 className="font-heading text-base leading-snug text-foreground">
             {product.name}

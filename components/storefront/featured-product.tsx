@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { formatIDR } from "@/lib/format";
-import { CATEGORY_LABELS } from "@/components/storefront/product-card";
+import { CATEGORY_LABEL } from "@/lib/order-status";
 import type { ProductWithVariants } from "@/types";
 
 export function FeaturedProduct({ product }: { product: ProductWithVariants }) {
@@ -21,7 +21,7 @@ export function FeaturedProduct({ product }: { product: ProductWithVariants }) {
       </div>
       <div className="order-1 space-y-4 lg:order-2">
         <span className="text-xs tracking-[0.2em] uppercase opacity-80">
-          Pilihan · {CATEGORY_LABELS[product.category]}
+          Pilihan · {CATEGORY_LABEL[product.category]}
         </span>
         <h2 className="font-heading text-3xl leading-tight sm:text-4xl">
           {product.name}

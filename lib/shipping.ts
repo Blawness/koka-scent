@@ -56,7 +56,7 @@ export async function getShippingRates(
  * unset, missing, or unrecognised. Anything explicit like "rajaongkir" is
  * passed through so a typo surfaces as an `unknown_provider` error.
  */
-export function resolveProvider(env: NodeJS.ProcessEnv = process.env): Provider {
+export function resolveProvider(env: Record<string, string | undefined> = process.env): Provider {
   const raw = env.SHIPPING_PROVIDER?.trim().toLowerCase();
   if (!raw) return "biteship";
   if (raw === "biteship" || raw === "rajaongkir") return raw;

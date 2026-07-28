@@ -29,8 +29,9 @@ export async function POST(req: Request) {
   const parsed = createOrderSchema.safeParse(body);
 
   if (!parsed.success) {
+    const firstIssue = parsed.error.issues[0];
     return NextResponse.json(
-      { error: parsed.error.flatten() },
+      { error: firstIssue?.message ?? "Data pesanan tidak valid" },
       { status: 400 },
     );
   }
