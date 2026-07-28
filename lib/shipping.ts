@@ -140,9 +140,11 @@ async function getBiteshipRates(
 // ─── RajaOngkir (Komerce) ──────────────────────────────────────────────────
 
 type RajaOngkirCostRow = {
-  shipping_name?: string;
-  service_name?: string;
-  shipping_cost_net?: number;
+  name?: string;
+  code?: string;
+  service?: string;
+  description?: string;
+  cost?: number;
   etd?: string;
 };
 
@@ -158,15 +160,15 @@ type RajaOngkirDestination = {
   zip_code?: string;
 };
 
-/** Pure mapper: RajaOngkir `calculate_reguler[]` → `ShippingRate[]`. */
+/** Pure mapper: RajaOngkir cost rows → `ShippingRate[]`. */
 export function mapRajaOngkirCostsToRates(
   rows: RajaOngkirCostRow[],
 ): ShippingRate[] {
   const rates: ShippingRate[] = [];
   for (const row of rows) {
-    const courier = row.shipping_name?.trim();
-    const service = row.service_name?.trim();
-    const cost = row.shipping_cost_net;
+    const courier = row.name?.trim();
+    const service = row.service?.trim();
+    const cost = row.cost;
     const etd = row.etd?.trim();
     if (!courier || !service || !cost || cost <= 0) continue;
     rates.push({ courier, service, cost, etd: etd || "-" });
@@ -194,7 +196,7 @@ async function getRajaOngkirRates(
     courier: couriers,
   });
 
-  const res = await fetch(`${RAJAONGKIR_BASE}/calculate/district/domestic-cost`, {
+  const res = await fetch(`${RAJAONGKIR_BASE}/calculate/domestic-cost`, {
     method: "POST",
     headers: { key: apiKey, "content-type": "application/x-www-form-urlencoded" },
     body,
@@ -204,15 +206,15 @@ async function getRajaOngkirRates(
 
   const json = (await res.json()) as {
     meta?: { status?: string; message?: string };
-    data?: { calculate_reguler?: RajaOngkirCostRow[] };
+    data?: RajaOngkirCostRow[];
   };
-  if (json.meta?.status !== "success" || !json.data?.calculate_reguler) {
+  if (json.meta?.status !== "success" || !Array.isArray(json.data)) {
     throw new ShippingError(
       "upstream_error",
-      `RajaOngkir response invalid: ${json.meta?.message ?? "no calculate_reguler"}`,
+      `RajaOngkir response invalid: ${json.meta?.message ?? "no data array"}`,
     );
   }
-  return mapRajaOngkirCostsToRates(json.data.calculate_reguler);
+  return mapRajaOngkirCostsToRates(json.data);
 }
 
 async function getOriginDistrictId(

@@ -28,7 +28,7 @@ export function ShippingCostBox({
   const [rates, setRates] = useState<ShippingRate[] | null>(null);
   const [error, setError] = useState(false);
 
-  const ready = city.trim().length > 0 && postal.trim().length >= 4;
+  const ready = city.trim().length > 0 && /^\d{5}$/.test(postal.trim());
 
   useEffect(() => {
     if (!ready) return;
@@ -44,8 +44,14 @@ export function ShippingCostBox({
         weightGrams,
       }),
     })
-      .then((res) => res.json())
-      .then((body: { data?: ShippingRate[] }) => {
+      .then(async (res) => {
+        const body = await res.json();
+        if (!res.ok) {
+          throw new Error((body as { error?: string }).error ?? `HTTP ${res.status}`);
+        }
+        return body as { data?: ShippingRate[] };
+      })
+      .then((body) => {
         if (cancelled) return;
         setRates(body.data ?? []);
         setError(false);

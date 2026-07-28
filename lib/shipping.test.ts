@@ -62,24 +62,16 @@ describe("mapRajaOngkirCostsToRates", () => {
   it("maps a RajaOngkir cost row to ShippingRate shape", () => {
     const result = mapRajaOngkirCostsToRates([
       {
-        shipping_name: "JNE",
-        service_name: "CTC",
-        shipping_cost_net: 18000,
-        etd: "2-3",
+        name: "Jalur Nugraha Ekakurir (JNE)",
+        code: "jne",
+        service: "REG",
+        cost: 12000,
+        etd: "2 day",
       },
     ]);
     expect(result).toEqual([
-      { courier: "JNE", service: "CTC", cost: 18000, etd: "2-3" },
+      { courier: "Jalur Nugraha Ekakurir (JNE)", service: "REG", cost: 12000, etd: "2 day" },
     ]);
-  });
-
-  it("uses shipping_cost_net (post-discount), not shipping_cost", () => {
-    // shipping_cost_net is what the customer actually pays after RajaOngkir
-    // markup/cashback. shipping_cost is the raw courier price.
-    const result = mapRajaOngkirCostsToRates([
-      { shipping_name: "JNE", service_name: "REG", shipping_cost_net: 12000, etd: "2-3" },
-    ]);
-    expect(result[0].cost).toBe(12000);
   });
 
   it("returns an empty array for empty input", () => {
@@ -88,15 +80,15 @@ describe("mapRajaOngkirCostsToRates", () => {
 
   it("skips rows missing required fields", () => {
     const result = mapRajaOngkirCostsToRates([
-      { shipping_name: "", service_name: "CTC", shipping_cost_net: 18000, etd: "2-3" },
-      { shipping_name: "JNE", service_name: "CTC", shipping_cost_net: 0, etd: "2-3" },
+      { name: "", service: "REG", cost: 18000, etd: "2-3" },
+      { name: "JNE", service: "REG", cost: 0, etd: "2-3" },
     ]);
     expect(result).toHaveLength(0);
   });
 
   it("keeps a row missing only etd (defaults to '-')", () => {
     const result = mapRajaOngkirCostsToRates([
-      { shipping_name: "JNE", service_name: "CTC", shipping_cost_net: 18000 },
+      { name: "JNE", service: "CTC", cost: 18000 },
     ]);
     expect(result).toHaveLength(1);
     expect(result[0].etd).toBe("-");
@@ -104,7 +96,7 @@ describe("mapRajaOngkirCostsToRates", () => {
 
   it("defaults etd to '-' when RajaOngkir omits it", () => {
     const result = mapRajaOngkirCostsToRates([
-      { shipping_name: "JNE", service_name: "CTC", shipping_cost_net: 18000, etd: "" },
+      { name: "JNE", service: "CTC", cost: 18000, etd: "" },
     ]);
     expect(result[0].etd).toBe("-");
   });

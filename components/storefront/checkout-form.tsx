@@ -27,8 +27,7 @@ export const checkoutFormSchema = z.object({
   postal: z
     .string()
     .trim()
-    .min(4, "Kode pos tidak valid")
-    .max(6, "Kode pos tidak valid")
+    .length(5, "Kode pos harus 5 digit")
     .regex(/^[0-9]+$/, "Kode pos hanya berisi angka"),
 });
 
